@@ -78,7 +78,7 @@ class Gallery {
      * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
-    private $delete;
+    private $active;
 
     /**
      * Set file
@@ -232,25 +232,25 @@ class Gallery {
     }
 
     /**
-     * Set delete
+     * Set active
      *
-     * @param integer $delete
+     * @param integer $active
      *
      * @return Gallery
      */
-    public function setDelete($delete) {
-        $this->delete = $delete;
+    public function setActive($active) {
+        $this->active = $active;
 
         return $this;
     }
 
     /**
-     * Get delete
+     * Get active
      *
      * @return integer
      */
-    public function getDelete() {
-        return $this->delete;
+    public function getActive() {
+        return $this->active;
     }
 
     /**

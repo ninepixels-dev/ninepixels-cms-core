@@ -22,7 +22,15 @@ security:
             stateless: true
             anonymous: false
             
-        api:
+        api_edit:
             pattern: ^/
+            methods: ['POST', 'PUT', 'DELETE', 'OPTIONS']
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+            
+        api_read:
+            pattern: ^/
+            methods: ['GET']
             security: false
             anonymous: true

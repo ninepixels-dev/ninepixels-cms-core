@@ -2,75 +2,70 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Item;
+use AppBundle\Entity\Option;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ItemController extends FOSRestController {
+class OptionController extends FOSRestController {
 
     /**
-     * Get all items from currently logged user
+     * Get all options
      * 
-     * Path: /items
+     * Path: /options
      * Method; GET
      * 
-     * @return {json} List of items
+     * @return {json} List of options
      * 
-     * @throws NotFoundHttpException when there is no item in database
+     * @throws NotFoundHttpException when there is no options in database
      */
-    public function getItemsAction() {
+    public function getOptionsAction() {
         $item = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Item');
+                ->getAllWithoutAuth('AppBundle:Option');
 
         if (!$item) {
-            throw new HttpException(204, "There is no items for particular user");
+            throw new HttpException(204, "There is no option for particular user");
         }
 
         return $this->handleView($this->view($item));
     }
 
     /**
-     * Get specific item requested by ID
+     * Get specific option requested by ID
      * 
-     * Path: /items/{id}
+     * Path: /options/{id}
      * Method: GET
      * 
-     * @param {int} $id Item identifier
-     * @return {json} Item requested by ID
+     * @param {int} $id Option identifier
+     * @return {json} Option requested by ID
      * 
-     * @throws NotFoundHttpException when requested item doesn't exist
+     * @throws NotFoundHttpException when requested option doesn't exist
      */
-    public function getItemAction($id) {
+    public function getOptionAction($id) {
         $item = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Item', $id);
+                ->getWithoutAuth('AppBundle:Option', $id);
 
         if (!$item) {
-            throw new HttpException(404, "Item not exist!");
+            throw new HttpException(404, "Option not exist!");
         }
 
         return $this->handleView($this->view($item));
     }
 
     /**
-     * Add new item in database
+     * Add new option in database
      * 
-     * Path: /items
+     * Path: /options
      * Method: POST
      * 
      * @param {obj} $request Request object
      * @return {json} Status
      * 
      */
-    public function postItemAction(Request $request) {
+    public function postOptionAction(Request $request) {
         $data = $request->request->all();
-        $item = new Item();
-
-        if (isset($data['page'])) {
-            $data['page'] = $this->getBaseManager()
-                    ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
-        }
+        $item = new Option();
 
         $result = $this->getBaseManager()
                 ->set($item, $data, $this->getLoggedUser());
@@ -78,33 +73,33 @@ class ItemController extends FOSRestController {
         $view = array(
             'status' => 201,
             'item' => $result,
-            'message' => 'New item added to database!'
+            'message' => 'New option added to database!'
         );
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Update specific item
+     * Update specific option
      * 
-     * Path: /items/{id}
+     * Path: /options/{id}
      * Method: PUT
      * 
      * @param {int} $id Item identifier
      * @param {obj} $request Request object
      * @return {json} Status
      * 
-     * @throws NotFoundHttpException when requested item doesn't exist
+     * @throws NotFoundHttpException when requested option doesn't exist
      * @throws AccessDeniedException when user missmatch one defined in case
      */
-    public function putItemAction($id, Request $request) {
+    public function putOptionAction($id, Request $request) {
         $data = $request->request->all();
 
         $result = $this->getBaseManager()
-                ->update($data, 'AppBundle:Item', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Option', $id, $this->getLoggedUser());
 
         if ($result === 404) {
-            throw new HttpException(404, "Item with id " . $id . " not found!");
+            throw new HttpException(404, "Option with id " . $id . " not found!");
         } else if ($result === 401) {
             throw new AccessDeniedException();
         }
@@ -112,37 +107,37 @@ class ItemController extends FOSRestController {
         $view = array(
             'status' => 200,
             'item' => $result,
-            'message' => 'Item updated!'
+            'message' => 'Option updated!'
         );
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Delete specific item
+     * Delete specific option
      * 
-     * Path: /items/{id}
+     * Path: /options/{id}
      * Method: DELETE
      * 
-     * @param {int} $id Item identifier
+     * @param {int} $id Option identifier
      * @return {json} Status
      * 
-     * @throws NotFoundHttpException when requested item doesn't exist
+     * @throws NotFoundHttpException when requested option doesn't exist
      * @throws AccessDeniedException when user missmatch one defined in calendar
      */
-    public function deleteItemAction($id) {
+    public function deleteOptionAction($id) {
         $result = $this->getBaseManager()
-                ->delete('AppBundle:Item', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Option', $id, $this->getLoggedUser());
 
         if ($result === 404) {
-            throw new HttpException(404, "Item with id " . $id . " not found!");
+            throw new HttpException(404, "Option with id " . $id . " not found!");
         } else if ($result === 401) {
             throw new AccessDeniedException();
         }
 
         $view = array(
             'status' => 200,
-            'message' => 'Item successfully deleted!'
+            'message' => 'Option successfully deleted!'
         );
 
         return $this->handleView($this->view($view));

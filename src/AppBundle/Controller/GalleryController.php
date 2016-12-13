@@ -67,6 +67,11 @@ class GalleryController extends FOSRestController {
         $data = $request->request->all();
         $gallery = new Gallery();
 
+        if (isset($data['page'])) {
+            $data['page'] = $this->getBaseManager()
+                    ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
+        }
+
         $result = $this->getBaseManager()
                 ->set($gallery, $data, $this->getLoggedUser());
 

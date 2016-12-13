@@ -67,6 +67,11 @@ class PageController extends FOSRestController {
         $data = $request->request->all();
         $page = new Page();
 
+        if (isset($data['parent'])) {
+            $data['parent'] = $this->getBaseManager()
+                    ->get('AppBundle:Page', $data['parent'], $this->getLoggedUser());
+        }
+
         $result = $this->getBaseManager()
                 ->set($page, $data, $this->getLoggedUser());
 

@@ -59,7 +59,8 @@ class Page {
     private $description;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
      * @Expose
      */
     private $parent;
@@ -98,13 +99,7 @@ class Page {
      * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
-    private $order;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
-     * @Expose
-     */
-    private $delete;
+    private $position;
 
     /**
      * Set values dinamicaly
@@ -370,47 +365,25 @@ class Page {
     }
 
     /**
-     * Set order
+     * Set position
      *
-     * @param integer $order
+     * @param integer $position
      *
      * @return Page
      */
-    public function setOrder($order) {
-        $this->order = $order;
+    public function setPosition($position) {
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get position
      *
      * @return integer
      */
-    public function getOrder() {
-        return $this->order;
-    }
-
-    /**
-     * Set delete
-     *
-     * @param integer $delete
-     *
-     * @return Page
-     */
-    public function setDelete($delete) {
-        $this->delete = $delete;
-
-        return $this;
-    }
-
-    /**
-     * Get delete
-     *
-     * @return integer
-     */
-    public function getDelete() {
-        return $this->delete;
+    public function getPosition() {
+        return $this->position;
     }
 
     /**

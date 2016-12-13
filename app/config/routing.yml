@@ -30,3 +30,7 @@ items:
 pages:
     type: rest
     resource: AppBundle\Controller\PageController
+
+options:
+    type: rest
+    resource: AppBundle\Controller\OptionController
