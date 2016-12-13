@@ -3,10 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="ninepixels_pages")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Page {
 
@@ -14,6 +18,7 @@ class Page {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -25,66 +30,79 @@ class Page {
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $template;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $navigationName;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Expose
      */
     private $parent;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
     private $header;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
     private $navigation;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
     private $footer;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
     private $inNavigation;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $active;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $order;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $delete;
 
@@ -100,14 +118,12 @@ class Page {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -118,8 +134,7 @@ class Page {
      *
      * @return Page
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -130,8 +145,7 @@ class Page {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -142,8 +156,7 @@ class Page {
      *
      * @return Page
      */
-    public function setTemplate($template)
-    {
+    public function setTemplate($template) {
         $this->template = $template;
 
         return $this;
@@ -154,8 +167,7 @@ class Page {
      *
      * @return string
      */
-    public function getTemplate()
-    {
+    public function getTemplate() {
         return $this->template;
     }
 
@@ -166,8 +178,7 @@ class Page {
      *
      * @return Page
      */
-    public function setNavigationName($navigationName)
-    {
+    public function setNavigationName($navigationName) {
         $this->navigationName = $navigationName;
 
         return $this;
@@ -178,8 +189,7 @@ class Page {
      *
      * @return string
      */
-    public function getNavigationName()
-    {
+    public function getNavigationName() {
         return $this->navigationName;
     }
 
@@ -190,8 +200,7 @@ class Page {
      *
      * @return Page
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -202,8 +211,7 @@ class Page {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -214,8 +222,7 @@ class Page {
      *
      * @return Page
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -226,8 +233,7 @@ class Page {
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -238,8 +244,7 @@ class Page {
      *
      * @return Page
      */
-    public function setParent($parent)
-    {
+    public function setParent($parent) {
         $this->parent = $parent;
 
         return $this;
@@ -250,8 +255,7 @@ class Page {
      *
      * @return integer
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -262,8 +266,7 @@ class Page {
      *
      * @return Page
      */
-    public function setHeader($header)
-    {
+    public function setHeader($header) {
         $this->header = $header;
 
         return $this;
@@ -274,8 +277,7 @@ class Page {
      *
      * @return integer
      */
-    public function getHeader()
-    {
+    public function getHeader() {
         return $this->header;
     }
 
@@ -286,8 +288,7 @@ class Page {
      *
      * @return Page
      */
-    public function setNavigation($navigation)
-    {
+    public function setNavigation($navigation) {
         $this->navigation = $navigation;
 
         return $this;
@@ -298,8 +299,7 @@ class Page {
      *
      * @return integer
      */
-    public function getNavigation()
-    {
+    public function getNavigation() {
         return $this->navigation;
     }
 
@@ -310,8 +310,7 @@ class Page {
      *
      * @return Page
      */
-    public function setFooter($footer)
-    {
+    public function setFooter($footer) {
         $this->footer = $footer;
 
         return $this;
@@ -322,8 +321,7 @@ class Page {
      *
      * @return integer
      */
-    public function getFooter()
-    {
+    public function getFooter() {
         return $this->footer;
     }
 
@@ -334,8 +332,7 @@ class Page {
      *
      * @return Page
      */
-    public function setInNavigation($inNavigation)
-    {
+    public function setInNavigation($inNavigation) {
         $this->inNavigation = $inNavigation;
 
         return $this;
@@ -346,8 +343,7 @@ class Page {
      *
      * @return integer
      */
-    public function getInNavigation()
-    {
+    public function getInNavigation() {
         return $this->inNavigation;
     }
 
@@ -358,8 +354,7 @@ class Page {
      *
      * @return Page
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -370,8 +365,7 @@ class Page {
      *
      * @return integer
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -382,8 +376,7 @@ class Page {
      *
      * @return Page
      */
-    public function setOrder($order)
-    {
+    public function setOrder($order) {
         $this->order = $order;
 
         return $this;
@@ -394,8 +387,7 @@ class Page {
      *
      * @return integer
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
 
@@ -406,8 +398,7 @@ class Page {
      *
      * @return Page
      */
-    public function setDelete($delete)
-    {
+    public function setDelete($delete) {
         $this->delete = $delete;
 
         return $this;
@@ -418,8 +409,7 @@ class Page {
      *
      * @return integer
      */
-    public function getDelete()
-    {
+    public function getDelete() {
         return $this->delete;
     }
 
@@ -430,8 +420,7 @@ class Page {
      *
      * @return Page
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -442,8 +431,8 @@ class Page {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
 }

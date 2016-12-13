@@ -3,10 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="ninepixels_items")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Item {
 
@@ -14,6 +18,7 @@ class Item {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -26,46 +31,55 @@ class Item {
     /**
      * @ORM\ManyToOne(targetEntity="Page")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @Expose
      */
     private $page;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="string", length=10960, nullable=true)
+     * @Expose
      */
     private $structure;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $video;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $class;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $order;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $editable;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $delete;
 
@@ -81,14 +95,12 @@ class Item {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -99,8 +111,7 @@ class Item {
      *
      * @return Item
      */
-    public function setIdentifier($identifier)
-    {
+    public function setIdentifier($identifier) {
         $this->identifier = $identifier;
 
         return $this;
@@ -111,8 +122,7 @@ class Item {
      *
      * @return string
      */
-    public function getIdentifier()
-    {
+    public function getIdentifier() {
         return $this->identifier;
     }
 
@@ -123,8 +133,7 @@ class Item {
      *
      * @return Item
      */
-    public function setStructure($structure)
-    {
+    public function setStructure($structure) {
         $this->structure = $structure;
 
         return $this;
@@ -135,8 +144,7 @@ class Item {
      *
      * @return string
      */
-    public function getStructure()
-    {
+    public function getStructure() {
         return $this->structure;
     }
 
@@ -147,8 +155,7 @@ class Item {
      *
      * @return Item
      */
-    public function setImage($image)
-    {
+    public function setImage($image) {
         $this->image = $image;
 
         return $this;
@@ -159,8 +166,7 @@ class Item {
      *
      * @return string
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -171,8 +177,7 @@ class Item {
      *
      * @return Item
      */
-    public function setVideo($video)
-    {
+    public function setVideo($video) {
         $this->video = $video;
 
         return $this;
@@ -183,8 +188,7 @@ class Item {
      *
      * @return string
      */
-    public function getVideo()
-    {
+    public function getVideo() {
         return $this->video;
     }
 
@@ -195,8 +199,7 @@ class Item {
      *
      * @return Item
      */
-    public function setClass($class)
-    {
+    public function setClass($class) {
         $this->class = $class;
 
         return $this;
@@ -207,8 +210,7 @@ class Item {
      *
      * @return string
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->class;
     }
 
@@ -219,8 +221,7 @@ class Item {
      *
      * @return Item
      */
-    public function setOrder($order)
-    {
+    public function setOrder($order) {
         $this->order = $order;
 
         return $this;
@@ -231,8 +232,7 @@ class Item {
      *
      * @return integer
      */
-    public function getOrder()
-    {
+    public function getOrder() {
         return $this->order;
     }
 
@@ -243,8 +243,7 @@ class Item {
      *
      * @return Item
      */
-    public function setEditable($editable)
-    {
+    public function setEditable($editable) {
         $this->editable = $editable;
 
         return $this;
@@ -255,8 +254,7 @@ class Item {
      *
      * @return integer
      */
-    public function getEditable()
-    {
+    public function getEditable() {
         return $this->editable;
     }
 
@@ -267,8 +265,7 @@ class Item {
      *
      * @return Item
      */
-    public function setDelete($delete)
-    {
+    public function setDelete($delete) {
         $this->delete = $delete;
 
         return $this;
@@ -279,8 +276,7 @@ class Item {
      *
      * @return integer
      */
-    public function getDelete()
-    {
+    public function getDelete() {
         return $this->delete;
     }
 
@@ -291,8 +287,7 @@ class Item {
      *
      * @return Item
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -303,8 +298,7 @@ class Item {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -315,8 +309,7 @@ class Item {
      *
      * @return Item
      */
-    public function setPage(\AppBundle\Entity\Page $page = null)
-    {
+    public function setPage(\AppBundle\Entity\Page $page = null) {
         $this->page = $page;
 
         return $this;
@@ -327,8 +320,8 @@ class Item {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
+
 }

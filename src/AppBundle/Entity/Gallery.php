@@ -5,11 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @Vich\Uploadable
  * @ORM\Table(name="ninepixels_gallery")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Gallery {
 
@@ -17,6 +21,7 @@ class Gallery {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -29,41 +34,49 @@ class Gallery {
     /**
      * @ORM\ManyToOne(targetEntity="Page")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @Expose
      */
     private $page;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $identifier;
 
     /**
      * @Vich\UploadableField(mapping="file", fileNameProperty="url")
+     * @Expose
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true)
+     * @Expose
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $video;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $preview;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $editable;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $delete;
 
@@ -121,14 +134,12 @@ class Gallery {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -139,8 +150,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setIdentifier($identifier)
-    {
+    public function setIdentifier($identifier) {
         $this->identifier = $identifier;
 
         return $this;
@@ -151,8 +161,7 @@ class Gallery {
      *
      * @return string
      */
-    public function getIdentifier()
-    {
+    public function getIdentifier() {
         return $this->identifier;
     }
 
@@ -163,8 +172,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setVideo($video)
-    {
+    public function setVideo($video) {
         $this->video = $video;
 
         return $this;
@@ -175,8 +183,7 @@ class Gallery {
      *
      * @return string
      */
-    public function getVideo()
-    {
+    public function getVideo() {
         return $this->video;
     }
 
@@ -187,8 +194,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setPreview($preview)
-    {
+    public function setPreview($preview) {
         $this->preview = $preview;
 
         return $this;
@@ -199,8 +205,7 @@ class Gallery {
      *
      * @return integer
      */
-    public function getPreview()
-    {
+    public function getPreview() {
         return $this->preview;
     }
 
@@ -211,8 +216,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setEditable($editable)
-    {
+    public function setEditable($editable) {
         $this->editable = $editable;
 
         return $this;
@@ -223,8 +227,7 @@ class Gallery {
      *
      * @return integer
      */
-    public function getEditable()
-    {
+    public function getEditable() {
         return $this->editable;
     }
 
@@ -235,8 +238,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setDelete($delete)
-    {
+    public function setDelete($delete) {
         $this->delete = $delete;
 
         return $this;
@@ -247,8 +249,7 @@ class Gallery {
      *
      * @return integer
      */
-    public function getDelete()
-    {
+    public function getDelete() {
         return $this->delete;
     }
 
@@ -259,8 +260,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -271,8 +271,7 @@ class Gallery {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -283,8 +282,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setPage(\AppBundle\Entity\Page $page = null)
-    {
+    public function setPage(\AppBundle\Entity\Page $page = null) {
         $this->page = $page;
 
         return $this;
@@ -295,8 +293,8 @@ class Gallery {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
+
 }
