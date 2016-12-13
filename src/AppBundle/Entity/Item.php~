@@ -1,0 +1,84 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="ninepixels_items")
+ */
+class Item {
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     */
+    private $page;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $identifier;
+
+    /**
+     * @ORM\Column(type="string", length=10960, nullable=true)
+     */
+    private $structure;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $video;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $class;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     */
+    private $order;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     */
+    private $editable;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     */
+    private $delete;
+
+    /**
+     * Set values dinamicaly
+     *
+     * @return integer
+     */
+    public function setValue($key, $value) {
+        if ($key !== 'user' && $key !== 'id') {
+            $this->{$key} = $value;
+            return $this;
+        }
+    }
+
+}

@@ -1,0 +1,32 @@
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+register_user:
+    path: /register
+    defaults: { _controller: AppBundle:Register:register }
+    methods: POST
+    
+confirm_user:
+    path: /register/confirm/{token}
+    defaults: { _controller: AppBundle:Register:confirm }
+    methods: GET
+
+users:
+    type: rest
+    resource: AppBundle\Controller\UserController
+
+galleries:
+    type: rest
+    resource: AppBundle\Controller\GalleryController
+
+items:
+    type: rest
+    resource: AppBundle\Controller\ItemController
+
+pages:
+    type: rest
+    resource: AppBundle\Controller\PageController

@@ -1,0 +1,28 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        oauth_token:
+            pattern: ^/oauth/v2/token
+            security: false
+
+        register_user:
+            pattern: ^/register
+            security: false
+            anonymous: true
+            
+        users:
+            pattern: ^/users
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+            
+        api:
+            pattern: ^/
+            security: false
+            anonymous: true
