@@ -15,7 +15,7 @@ class RegisterController extends FOSRestController {
         $token = random_bytes(64);
 
         if ($userManager->findUserByUsername($data['username'])) {
-            throw new HttpException(400, "Usename alrady exist");
+            throw new HttpException(400, "Username alrady exist");
         }
 
         if ($userManager->findUserByEmail($data['email'])) {
@@ -27,14 +27,17 @@ class RegisterController extends FOSRestController {
         $user->setEmail($data['email']);
 
         $user->setPlainPassword($data['password']);
-        $user->setConfirmationToken(sha1($token));
-        $user->setExpiresAt(
-                new \DateTime(date('Y-m-d H:i:s', strtotime("+1 days")))
-        );
+        $user->setEnabled(true);
 
         $userManager->updateUser($user);
 
-        return $this->sendConfirmationEmail($user);
+        $view = array(
+            'status' => 201,
+            'item' => $userManager->findUserByUsername($data['username']),
+            'message' => 'New user added to database!'
+        );
+
+        return $this->handleView($this->view($view));
     }
 
     protected function sendConfirmationEmail($user) {

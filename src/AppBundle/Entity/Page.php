@@ -24,9 +24,16 @@ class Page {
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @Expose
+     */
+    private $parent;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -35,16 +42,23 @@ class Page {
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $template;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @Expose
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $navigationName;
+    private $navigation;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -59,47 +73,46 @@ class Page {
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Page")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $parent;
+    private $showHeader;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $header;
+    private $showNavigation;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $navigation;
+    private $showFooter;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $footer;
+    private $showInNavigation;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $inNavigation;
+    private $visible;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
-     * @Expose
-     */
-    private $active;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
     private $position;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
+     */
+    private $active;
 
     /**
      * Set values dinamicaly
@@ -108,7 +121,9 @@ class Page {
      */
     public function setValue($key, $value) {
         if ($key !== 'user' && $key !== 'id') {
-            $this->{$key} = $value;
+            $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $str[0] = strtolower($str[0]);
+            $this->{$str} = $value;
             return $this;
         }
     }
@@ -118,7 +133,8 @@ class Page {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -129,7 +145,8 @@ class Page {
      *
      * @return Page
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -140,7 +157,8 @@ class Page {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -151,7 +169,8 @@ class Page {
      *
      * @return Page
      */
-    public function setTemplate($template) {
+    public function setTemplate($template)
+    {
         $this->template = $template;
 
         return $this;
@@ -162,30 +181,33 @@ class Page {
      *
      * @return string
      */
-    public function getTemplate() {
+    public function getTemplate()
+    {
         return $this->template;
     }
 
     /**
-     * Set navigationName
+     * Set navigation
      *
-     * @param string $navigationName
+     * @param string $navigation
      *
      * @return Page
      */
-    public function setNavigationName($navigationName) {
-        $this->navigationName = $navigationName;
+    public function setNavigation($navigation)
+    {
+        $this->navigation = $navigation;
 
         return $this;
     }
 
     /**
-     * Get navigationName
+     * Get navigation
      *
      * @return string
      */
-    public function getNavigationName() {
-        return $this->navigationName;
+    public function getNavigation()
+    {
+        return $this->navigation;
     }
 
     /**
@@ -195,7 +217,8 @@ class Page {
      *
      * @return Page
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
@@ -206,7 +229,8 @@ class Page {
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
@@ -217,7 +241,8 @@ class Page {
      *
      * @return Page
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -228,140 +253,129 @@ class Page {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set parent
+     * Set showHeader
      *
-     * @param integer $parent
+     * @param integer $showHeader
      *
      * @return Page
      */
-    public function setParent($parent) {
-        $this->parent = $parent;
+    public function setShowHeader($showHeader)
+    {
+        $this->showHeader = $showHeader;
 
         return $this;
     }
 
     /**
-     * Get parent
+     * Get showHeader
      *
      * @return integer
      */
-    public function getParent() {
-        return $this->parent;
+    public function getShowHeader()
+    {
+        return $this->showHeader;
     }
 
     /**
-     * Set header
+     * Set showNavigation
      *
-     * @param integer $header
+     * @param integer $showNavigation
      *
      * @return Page
      */
-    public function setHeader($header) {
-        $this->header = $header;
+    public function setShowNavigation($showNavigation)
+    {
+        $this->showNavigation = $showNavigation;
 
         return $this;
     }
 
     /**
-     * Get header
+     * Get showNavigation
      *
      * @return integer
      */
-    public function getHeader() {
-        return $this->header;
+    public function getShowNavigation()
+    {
+        return $this->showNavigation;
     }
 
     /**
-     * Set navigation
+     * Set showFooter
      *
-     * @param integer $navigation
+     * @param integer $showFooter
      *
      * @return Page
      */
-    public function setNavigation($navigation) {
-        $this->navigation = $navigation;
+    public function setShowFooter($showFooter)
+    {
+        $this->showFooter = $showFooter;
 
         return $this;
     }
 
     /**
-     * Get navigation
+     * Get showFooter
      *
      * @return integer
      */
-    public function getNavigation() {
-        return $this->navigation;
+    public function getShowFooter()
+    {
+        return $this->showFooter;
     }
 
     /**
-     * Set footer
+     * Set showInNavigation
      *
-     * @param integer $footer
+     * @param integer $showInNavigation
      *
      * @return Page
      */
-    public function setFooter($footer) {
-        $this->footer = $footer;
+    public function setShowInNavigation($showInNavigation)
+    {
+        $this->showInNavigation = $showInNavigation;
 
         return $this;
     }
 
     /**
-     * Get footer
+     * Get showInNavigation
      *
      * @return integer
      */
-    public function getFooter() {
-        return $this->footer;
+    public function getShowInNavigation()
+    {
+        return $this->showInNavigation;
     }
 
     /**
-     * Set inNavigation
+     * Set visible
      *
-     * @param integer $inNavigation
+     * @param integer $visible
      *
      * @return Page
      */
-    public function setInNavigation($inNavigation) {
-        $this->inNavigation = $inNavigation;
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
 
         return $this;
     }
 
     /**
-     * Get inNavigation
+     * Get visible
      *
      * @return integer
      */
-    public function getInNavigation() {
-        return $this->inNavigation;
-    }
-
-    /**
-     * Set active
-     *
-     * @param integer $active
-     *
-     * @return Page
-     */
-    public function setActive($active) {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return integer
-     */
-    public function getActive() {
-        return $this->active;
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
     /**
@@ -371,7 +385,8 @@ class Page {
      *
      * @return Page
      */
-    public function setPosition($position) {
+    public function setPosition($position)
+    {
         $this->position = $position;
 
         return $this;
@@ -382,8 +397,33 @@ class Page {
      *
      * @return integer
      */
-    public function getPosition() {
+    public function getPosition()
+    {
         return $this->position;
+    }
+
+    /**
+     * Set active
+     *
+     * @param integer $active
+     *
+     * @return Page
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return integer
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**
@@ -393,7 +433,8 @@ class Page {
      *
      * @return Page
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -404,8 +445,56 @@ class Page {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\Page $parent
+     *
+     * @return Page
+     */
+    public function setParent(\AppBundle\Entity\Page $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\Page
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Page
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

@@ -3,10 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="ninepixels_pages")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Page {
 
@@ -14,79 +18,101 @@ class Page {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @Expose
+     */
+    private $parent;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
+     * @Expose
      */
     private $template;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @Expose
      */
-    private $navigationName;
+    private $image;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $navigation;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
-    private $parent;
+    private $showHeader;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
-    private $header;
+    private $showNavigation;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
-    private $navigation;
+    private $showFooter;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
-    private $footer;
+    private $showInNavigation;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
-    private $inNavigation;
+    private $visible;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
+     */
+    private $position;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @Expose
      */
     private $active;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
-     */
-    private $order;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
-     */
-    private $delete;
 
     /**
      * Set values dinamicaly
@@ -95,9 +121,10 @@ class Page {
      */
     public function setValue($key, $value) {
         if ($key !== 'user' && $key !== 'id') {
-            $this->{$key} = $value;
+            $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $str[0] = strtolower($str[0]);
+            $this->{$str} = $value;
             return $this;
         }
     }
-
 }

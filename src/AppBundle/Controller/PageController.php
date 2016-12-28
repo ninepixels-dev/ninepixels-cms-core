@@ -72,6 +72,11 @@ class PageController extends FOSRestController {
                     ->get('AppBundle:Page', $data['parent'], $this->getLoggedUser());
         }
 
+        if (isset($data['image'])) {
+            $data['image'] = $this->getBaseManager()
+                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
+        }
+
         $result = $this->getBaseManager()
                 ->set($page, $data, $this->getLoggedUser());
 
@@ -99,6 +104,16 @@ class PageController extends FOSRestController {
      */
     public function putPageAction($id, Request $request) {
         $data = $request->request->all();
+
+        if (isset($data['parent'])) {
+            $data['parent'] = $this->getBaseManager()
+                    ->get('AppBundle:Page', $data['parent'], $this->getLoggedUser());
+        }
+
+        if (isset($data['image'])) {
+            $data['image'] = $this->getBaseManager()
+                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
+        }
 
         $result = $this->getBaseManager()
                 ->update($data, 'AppBundle:Page', $id, $this->getLoggedUser());

@@ -39,7 +39,7 @@ class BaseManager {
     public function getAllWithoutAuth($repo) {
         $obj = $this->em
                 ->getRepository($repo)
-                ->findAll();
+                ->findBy(array('active' => 1));
 
         return $obj;
     }

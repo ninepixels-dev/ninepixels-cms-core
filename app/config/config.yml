@@ -103,6 +103,6 @@ vich_uploader:
     
     mappings:
         file:
-            uri_prefix:         /Uploads/documents
-            upload_destination: '%kernel.root_dir%/Uploads/documents'
+            uri_prefix:         /uploads
+            upload_destination: 'uploads'
             namer:              vich_uploader.namer_uniqid

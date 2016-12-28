@@ -3,10 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="ninepixels_items")
+ * 
+ * @ExclusionPolicy("all")
  */
 class Item {
 
@@ -14,60 +18,71 @@ class Item {
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Page")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="page", referencedColumnName="id")
+     * @Expose
      */
     private $page;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
     private $identifier;
 
     /**
      * @ORM\Column(type="string", length=10960, nullable=true)
+     * @Expose
      */
     private $structure;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @Expose
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
      */
-    private $video;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
-    private $class;
+    private $classes;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
-    private $order;
+    private $position;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
     private $editable;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
      */
-    private $delete;
+    private $active;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
+     */
+    private $visible;
 
     /**
      * Set values dinamicaly
@@ -76,7 +91,9 @@ class Item {
      */
     public function setValue($key, $value) {
         if ($key !== 'user' && $key !== 'id') {
-            $this->{$key} = $value;
+            $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $str[0] = strtolower($str[0]);
+            $this->{$str} = $value;
             return $this;
         }
     }

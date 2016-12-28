@@ -24,13 +24,13 @@ class Item {
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Page")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="page", referencedColumnName="id")
      * @Expose
      */
     private $page;
@@ -48,7 +48,8 @@ class Item {
     private $structure;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
      * @Expose
      */
     private $image;
@@ -57,19 +58,13 @@ class Item {
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $video;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $class;
+    private $classes;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
-    private $order;
+    private $position;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
@@ -84,23 +79,33 @@ class Item {
     private $active;
 
     /**
+     * @ORM\Column(type="integer", options={"default" : 1})
+     * @Expose
+     */
+    private $visible;
+
+    /**
      * Set values dinamicaly
      *
      * @return integer
      */
     public function setValue($key, $value) {
         if ($key !== 'user' && $key !== 'id') {
-            $this->{$key} = $value;
+            $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            $str[0] = strtolower($str[0]);
+            $this->{$str} = $value;
             return $this;
         }
     }
+
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -111,7 +116,8 @@ class Item {
      *
      * @return Item
      */
-    public function setIdentifier($identifier) {
+    public function setIdentifier($identifier)
+    {
         $this->identifier = $identifier;
 
         return $this;
@@ -122,7 +128,8 @@ class Item {
      *
      * @return string
      */
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->identifier;
     }
 
@@ -133,7 +140,8 @@ class Item {
      *
      * @return Item
      */
-    public function setStructure($structure) {
+    public function setStructure($structure)
+    {
         $this->structure = $structure;
 
         return $this;
@@ -144,96 +152,57 @@ class Item {
      *
      * @return string
      */
-    public function getStructure() {
+    public function getStructure()
+    {
         return $this->structure;
     }
 
     /**
-     * Set image
+     * Set classes
      *
-     * @param string $image
+     * @param string $classes
      *
      * @return Item
      */
-    public function setImage($image) {
-        $this->image = $image;
+    public function setClasses($classes)
+    {
+        $this->classes = $classes;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get classes
      *
      * @return string
      */
-    public function getImage() {
-        return $this->image;
+    public function getClasses()
+    {
+        return $this->classes;
     }
 
     /**
-     * Set video
+     * Set position
      *
-     * @param string $video
+     * @param integer $position
      *
      * @return Item
      */
-    public function setVideo($video) {
-        $this->video = $video;
+    public function setPosition($position)
+    {
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get video
-     *
-     * @return string
-     */
-    public function getVideo() {
-        return $this->video;
-    }
-
-    /**
-     * Set class
-     *
-     * @param string $class
-     *
-     * @return Item
-     */
-    public function setClass($class) {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * Get class
-     *
-     * @return string
-     */
-    public function getClass() {
-        return $this->class;
-    }
-
-    /**
-     * Set order
-     *
-     * @param integer $order
-     *
-     * @return Item
-     */
-    public function setOrder($order) {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
+     * Get position
      *
      * @return integer
      */
-    public function getOrder() {
-        return $this->order;
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**
@@ -243,7 +212,8 @@ class Item {
      *
      * @return Item
      */
-    public function setEditable($editable) {
+    public function setEditable($editable)
+    {
         $this->editable = $editable;
 
         return $this;
@@ -254,7 +224,8 @@ class Item {
      *
      * @return integer
      */
-    public function getEditable() {
+    public function getEditable()
+    {
         return $this->editable;
     }
 
@@ -265,7 +236,8 @@ class Item {
      *
      * @return Item
      */
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
 
         return $this;
@@ -276,8 +248,33 @@ class Item {
      *
      * @return integer
      */
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param integer $visible
+     *
+     * @return Item
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return integer
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
     /**
@@ -287,7 +284,8 @@ class Item {
      *
      * @return Item
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -298,7 +296,8 @@ class Item {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
@@ -309,7 +308,8 @@ class Item {
      *
      * @return Item
      */
-    public function setPage(\AppBundle\Entity\Page $page = null) {
+    public function setPage(\AppBundle\Entity\Page $page = null)
+    {
         $this->page = $page;
 
         return $this;
@@ -320,8 +320,32 @@ class Item {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage() {
+    public function getPage()
+    {
         return $this->page;
     }
 
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Item
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

@@ -72,6 +72,13 @@ class ItemController extends FOSRestController {
                     ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
         }
 
+        if (isset($data['image'])) {
+            $data['image'] = $this->getBaseManager()
+                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
+        }
+
+        $item->setVisible(1);
+
         $result = $this->getBaseManager()
                 ->set($item, $data, $this->getLoggedUser());
 
@@ -99,6 +106,16 @@ class ItemController extends FOSRestController {
      */
     public function putItemAction($id, Request $request) {
         $data = $request->request->all();
+
+        if (isset($data['page'])) {
+            $data['page'] = $this->getBaseManager()
+                    ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
+        }
+
+        if (isset($data['image'])) {
+            $data['image'] = $this->getBaseManager()
+                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
+        }
 
         $result = $this->getBaseManager()
                 ->update($data, 'AppBundle:Item', $id, $this->getLoggedUser());

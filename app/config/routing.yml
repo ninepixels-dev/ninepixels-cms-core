@@ -6,8 +6,8 @@ fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
 register_user:
-    path: /register
-    defaults: { _controller: AppBundle:Register:register }
+    type: rest
+    resource: AppBundle\Controller\RegisterController
     methods: POST
     
 confirm_user:
@@ -19,9 +19,9 @@ users:
     type: rest
     resource: AppBundle\Controller\UserController
 
-galleries:
+images:
     type: rest
-    resource: AppBundle\Controller\GalleryController
+    resource: AppBundle\Controller\ImageController
 
 items:
     type: rest
@@ -34,3 +34,7 @@ pages:
 options:
     type: rest
     resource: AppBundle\Controller\OptionController
+
+components:
+    type: rest
+    resource: AppBundle\Controller\ComponentController

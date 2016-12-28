@@ -11,11 +11,11 @@ use JMS\Serializer\Annotation\Expose;
 /**
  * @ORM\Entity
  * @Vich\Uploadable
- * @ORM\Table(name="ninepixels_gallery")
+ * @ORM\Table(name="ninepixels_images")
  * 
  * @ExclusionPolicy("all")
  */
-class Gallery {
+class Image {
 
     /**
      * @ORM\Column(type="integer")
@@ -32,19 +32,6 @@ class Gallery {
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Page")
-     * @ORM\JoinColumn(name="page", referencedColumnName="id")
-     * @Expose
-     */
-    private $page;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $identifier;
-
-    /**
      * @Vich\UploadableField(mapping="file", fileNameProperty="url")
      * @Expose
      */
@@ -55,12 +42,6 @@ class Gallery {
      * @Expose
      */
     private $url;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $video;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -85,12 +66,6 @@ class Gallery {
      * @Expose
      */
     private $size;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
-     * @Expose
-     */
-    private $editable;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
@@ -128,28 +103,6 @@ class Gallery {
     }
 
     /**
-     * Set identifier
-     *
-     * @param string $identifier
-     *
-     * @return Gallery
-     */
-    public function setIdentifier($identifier) {
-        $this->identifier = $identifier;
-
-        return $this;
-    }
-
-    /**
-     * Get identifier
-     *
-     * @return string
-     */
-    public function getIdentifier() {
-        return $this->identifier;
-    }
-
-    /**
      * Set file
      *
      * @param string $file
@@ -173,7 +126,7 @@ class Gallery {
      *
      * @param string $url
      *
-     * @return Gallery
+     * @return Image
      */
     public function setUrl($url) {
         $this->url = $url;
@@ -191,47 +144,91 @@ class Gallery {
     }
 
     /**
-     * Set video
+     * Set alt
      *
-     * @param string $video
+     * @param string $alt
      *
-     * @return Gallery
+     * @return Image
      */
-    public function setVideo($video) {
-        $this->video = $video;
+    public function setAlt($alt) {
+        $this->alt = $alt;
 
         return $this;
     }
 
     /**
-     * Get video
+     * Get alt
      *
      * @return string
      */
-    public function getVideo() {
-        return $this->video;
+    public function getAlt() {
+        return $this->alt;
     }
 
     /**
-     * Set editable
+     * Set title
      *
-     * @param integer $editable
+     * @param string $title
      *
-     * @return Gallery
+     * @return Image
      */
-    public function setEditable($editable) {
-        $this->editable = $editable;
+    public function setTitle($title) {
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get editable
+     * Get title
      *
-     * @return integer
+     * @return string
      */
-    public function getEditable() {
-        return $this->editable;
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Image
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Set size
+     *
+     * @param string $size
+     *
+     * @return Image
+     */
+    public function setSize($size) {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return string
+     */
+    public function getSize() {
+        return $this->size;
     }
 
     /**
@@ -239,7 +236,7 @@ class Gallery {
      *
      * @param integer $visible
      *
-     * @return Gallery
+     * @return Image
      */
     public function setVisible($visible) {
         $this->visible = $visible;
@@ -261,7 +258,7 @@ class Gallery {
      *
      * @param integer $active
      *
-     * @return Gallery
+     * @return Image
      */
     public function setActive($active) {
         $this->active = $active;
@@ -283,7 +280,7 @@ class Gallery {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Gallery
+     * @return Image
      */
     public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
@@ -298,28 +295,6 @@ class Gallery {
      */
     public function getUser() {
         return $this->user;
-    }
-
-    /**
-     * Set page
-     *
-     * @param \AppBundle\Entity\Page $page
-     *
-     * @return Gallery
-     */
-    public function setPage(\AppBundle\Entity\Page $page = null) {
-        $this->page = $page;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return \AppBundle\Entity\Page
-     */
-    public function getPage() {
-        return $this->page;
     }
 
 }

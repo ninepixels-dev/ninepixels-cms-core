@@ -13,11 +13,18 @@ security:
 
         register_user:
             pattern: ^/register
-            security: false
-            anonymous: true
+            fos_oauth: true
+            stateless: true
+            anonymous: false
             
         users:
             pattern: ^/users
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+            
+        api_user:
+            pattern: ^/user
             fos_oauth: true
             stateless: true
             anonymous: false
