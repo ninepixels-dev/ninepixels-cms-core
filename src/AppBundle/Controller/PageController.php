@@ -113,6 +113,8 @@ class PageController extends FOSRestController {
         if (isset($data['image'])) {
             $data['image'] = $this->getBaseManager()
                     ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
+        } else {
+            $data['image'] = NULL;
         }
 
         $result = $this->getBaseManager()
