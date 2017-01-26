@@ -55,6 +55,13 @@ class Item {
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Locale")
+     * @ORM\JoinColumn(name="locale", referencedColumnName="id", nullable=true)
+     * @Expose
+     */
+    private $locale;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
@@ -98,14 +105,12 @@ class Item {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -116,8 +121,7 @@ class Item {
      *
      * @return Item
      */
-    public function setIdentifier($identifier)
-    {
+    public function setIdentifier($identifier) {
         $this->identifier = $identifier;
 
         return $this;
@@ -128,8 +132,7 @@ class Item {
      *
      * @return string
      */
-    public function getIdentifier()
-    {
+    public function getIdentifier() {
         return $this->identifier;
     }
 
@@ -140,8 +143,7 @@ class Item {
      *
      * @return Item
      */
-    public function setStructure($structure)
-    {
+    public function setStructure($structure) {
         $this->structure = $structure;
 
         return $this;
@@ -152,8 +154,7 @@ class Item {
      *
      * @return string
      */
-    public function getStructure()
-    {
+    public function getStructure() {
         return $this->structure;
     }
 
@@ -164,8 +165,7 @@ class Item {
      *
      * @return Item
      */
-    public function setClasses($classes)
-    {
+    public function setClasses($classes) {
         $this->classes = $classes;
 
         return $this;
@@ -176,8 +176,7 @@ class Item {
      *
      * @return string
      */
-    public function getClasses()
-    {
+    public function getClasses() {
         return $this->classes;
     }
 
@@ -188,8 +187,7 @@ class Item {
      *
      * @return Item
      */
-    public function setPosition($position)
-    {
+    public function setPosition($position) {
         $this->position = $position;
 
         return $this;
@@ -200,8 +198,7 @@ class Item {
      *
      * @return integer
      */
-    public function getPosition()
-    {
+    public function getPosition() {
         return $this->position;
     }
 
@@ -212,8 +209,7 @@ class Item {
      *
      * @return Item
      */
-    public function setEditable($editable)
-    {
+    public function setEditable($editable) {
         $this->editable = $editable;
 
         return $this;
@@ -224,8 +220,7 @@ class Item {
      *
      * @return integer
      */
-    public function getEditable()
-    {
+    public function getEditable() {
         return $this->editable;
     }
 
@@ -236,8 +231,7 @@ class Item {
      *
      * @return Item
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -248,8 +242,7 @@ class Item {
      *
      * @return integer
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -260,8 +253,7 @@ class Item {
      *
      * @return Item
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
 
         return $this;
@@ -272,8 +264,7 @@ class Item {
      *
      * @return integer
      */
-    public function getVisible()
-    {
+    public function getVisible() {
         return $this->visible;
     }
 
@@ -284,8 +275,7 @@ class Item {
      *
      * @return Item
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -296,8 +286,7 @@ class Item {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -308,8 +297,7 @@ class Item {
      *
      * @return Item
      */
-    public function setPage(\AppBundle\Entity\Page $page = null)
-    {
+    public function setPage(\AppBundle\Entity\Page $page = null) {
         $this->page = $page;
 
         return $this;
@@ -320,8 +308,7 @@ class Item {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
@@ -332,8 +319,7 @@ class Item {
      *
      * @return Item
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
-    {
+    public function setImage(\AppBundle\Entity\Image $image = null) {
         $this->image = $image;
 
         return $this;
@@ -344,8 +330,30 @@ class Item {
      *
      * @return \AppBundle\Entity\Image
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
+
+    /**
+     * Set locale
+     *
+     * @param \AppBundle\Entity\Locale $locale
+     *
+     * @return Item
+     */
+    public function setLocale(\AppBundle\Entity\Locale $locale = null) {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return \AppBundle\Entity\Locale
+     */
+    public function getLocale() {
+        return $this->locale;
+    }
+
 }

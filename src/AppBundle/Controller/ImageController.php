@@ -54,6 +54,32 @@ class ImageController extends FOSRestController {
     }
 
     /**
+     * Get all images from specific gallery
+     * 
+     * Path: /galleries/{slug}/images
+     * Method; GET
+     * 
+     * @return {json} List of items
+     * 
+     * @throws NotFoundHttpException when there is no item in database
+     */
+    public function getGalleriesImagesAction($slug) {
+        if ($slug === '0') {
+            $item = $this->getBaseManager()
+                    ->getByWithoutAuth('AppBundle:Image', array('gallery' => NULL));
+        } else {
+            $item = $this->getBaseManager()
+                    ->getByWithoutAuth('AppBundle:Image', array('gallery' => $slug));
+        }
+
+        if (!$item) {
+            throw new HttpException(204, "There is no images for particular gallery");
+        }
+
+        return $this->handleView($this->view($item));
+    }
+
+    /**
      * Add new image in database
      * 
      * Path: /images
@@ -67,6 +93,11 @@ class ImageController extends FOSRestController {
         $data = $request->request->all();
         $file = $request->files->all();
         $image = new Image();
+
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        }
 
         if (!empty($file)) {
             $data = array_merge($data, $file);
@@ -99,6 +130,11 @@ class ImageController extends FOSRestController {
      */
     public function putImagesAction($id, Request $request) {
         $data = $request->request->all();
+
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        }
 
         $result = $this->getBaseManager()
                 ->update($data, 'AppBundle:Image', $id, $this->getLoggedUser());

@@ -23,6 +23,10 @@ images:
     type: rest
     resource: AppBundle\Controller\ImageController
 
+galleries:
+    type: rest
+    resource: AppBundle\Controller\GalleryController
+
 items:
     type: rest
     resource: AppBundle\Controller\ItemController
@@ -31,6 +35,10 @@ pages:
     type: rest
     resource: AppBundle\Controller\PageController
 
+blogs:
+    type: rest
+    resource: AppBundle\Controller\BlogController
+
 options:
     type: rest
     resource: AppBundle\Controller\OptionController
@@ -38,3 +46,11 @@ options:
 components:
     type: rest
     resource: AppBundle\Controller\ComponentController
+
+products:
+    type: rest
+    resource: AppBundle\Controller\ProductController
+
+locale:
+    type: rest
+    resource: AppBundle\Controller\LocaleController

@@ -22,7 +22,75 @@ class ItemController extends FOSRestController {
      */
     public function getItemsAction() {
         $item = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Item');
+                ->getByWithoutAuth('AppBundle:Item', array('locale' => NULL));
+
+        if (!$item) {
+            throw new HttpException(204, "There is no items for particular user");
+        }
+
+        return $this->handleView($this->view($item));
+    }
+
+    /**
+     * Get all items from defined page
+     * 
+     * Path: /pages/{slug}/items
+     * Method; GET
+     * 
+     * @return {json} List of items
+     * 
+     * @throws NotFoundHttpException when there is no item in database
+     */
+    public function getPagesItemsAction($slug) {
+        if ($slug === '0') {
+            $item = $this->getBaseManager()
+                    ->getByWithoutAuth('AppBundle:Item', array('page' => NULL, 'locale' => NULL));
+        } else {
+            $item = $this->getBaseManager()
+                    ->getByWithoutAuth('AppBundle:Item', array('page' => $slug, 'locale' => NULL));
+        }
+
+        if (!$item) {
+            throw new HttpException(204, "There is no items for particular user");
+        }
+
+        return $this->handleView($this->view($item));
+    }
+
+    /**
+     * Get all items from defined locale
+     * 
+     * Path: /locales/{slug}/items
+     * Method; GET
+     * 
+     * @return {json} List of items
+     * 
+     * @throws NotFoundHttpException when there is no item in database
+     */
+    public function getLocalesItemsAction($slug) {
+        $item = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Item', array('locale' => $slug));
+
+        if (!$item) {
+            throw new HttpException(204, "There is no items for particular user");
+        }
+
+        return $this->handleView($this->view($item));
+    }
+
+    /**
+     * Get all items from defined page
+     * 
+     * Path: /locales/{lang}/pages/{slug}/items
+     * Method; GET
+     * 
+     * @return {json} List of items
+     * 
+     * @throws NotFoundHttpException when there is no item in database
+     */
+    public function getLocalesPagesItemsAction($lang, $slug) {
+        $item = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Item', array('page' => $slug, 'locale' => $lang));
 
         if (!$item) {
             throw new HttpException(204, "There is no items for particular user");
@@ -44,7 +112,7 @@ class ItemController extends FOSRestController {
      */
     public function getItemAction($id) {
         $item = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Item', $id);
+                ->getOneByWithoutAuth('AppBundle:Item', array('id' => $id, 'locale' => NULL));
 
         if (!$item) {
             throw new HttpException(404, "Item not exist!");

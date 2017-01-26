@@ -3,19 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @Vich\Uploadable
- * @ORM\Table(name="ninepixels_images")
+ * @ORM\Table(name="ninepixels_products")
  * 
  * @ExclusionPolicy("all")
  */
-class Image {
+class Product {
 
     /**
      * @ORM\Column(type="integer")
@@ -32,22 +29,16 @@ class Image {
     private $user;
 
     /**
-     * @Vich\UploadableField(mapping="file", fileNameProperty="url")
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
-    private $file;
-
-    /**
-     * @ORM\Column(type="string", length=128, nullable=true)
-     * @Expose
-     */
-    private $url;
+    private $template;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $alt;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -62,10 +53,11 @@ class Image {
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
      * @Expose
      */
-    private $size;
+    private $image;
 
     /**
      * @ORM\ManyToOne(targetEntity="Gallery")
@@ -75,13 +67,19 @@ class Image {
     private $gallery;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $visible;
+    private $price;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $units;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
     private $active;
@@ -110,66 +108,47 @@ class Image {
     }
 
     /**
-     * Set file
+     * Set template
      *
-     * @param string $file
+     * @param string $template
      *
-     * @return Documents
+     * @return Product
      */
-    public function setFile(File $file = null) {
-        $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getFile() {
-        return $this->file;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return Image
-     */
-    public function setUrl($url) {
-        $this->url = $url;
+    public function setTemplate($template) {
+        $this->template = $template;
 
         return $this;
     }
 
     /**
-     * Get url
+     * Get template
      *
      * @return string
      */
-    public function getUrl() {
-        return $this->url;
+    public function getTemplate() {
+        return $this->template;
     }
 
     /**
-     * Set alt
+     * Set name
      *
-     * @param string $alt
+     * @param string $name
      *
-     * @return Image
+     * @return Product
      */
-    public function setAlt($alt) {
-        $this->alt = $alt;
+    public function setName($name) {
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get alt
+     * Get name
      *
      * @return string
      */
-    public function getAlt() {
-        return $this->alt;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -177,7 +156,7 @@ class Image {
      *
      * @param string $title
      *
-     * @return Image
+     * @return Product
      */
     public function setTitle($title) {
         $this->title = $title;
@@ -199,7 +178,7 @@ class Image {
      *
      * @param string $description
      *
-     * @return Image
+     * @return Product
      */
     public function setDescription($description) {
         $this->description = $description;
@@ -217,47 +196,47 @@ class Image {
     }
 
     /**
-     * Set size
+     * Set price
      *
-     * @param string $size
+     * @param string $price
      *
-     * @return Image
+     * @return Product
      */
-    public function setSize($size) {
-        $this->size = $size;
+    public function setPrice($price) {
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get size
+     * Get price
      *
      * @return string
      */
-    public function getSize() {
-        return $this->size;
+    public function getPrice() {
+        return $this->price;
     }
 
     /**
-     * Set visible
+     * Set units
      *
-     * @param integer $visible
+     * @param string $units
      *
-     * @return Image
+     * @return Product
      */
-    public function setVisible($visible) {
-        $this->visible = $visible;
+    public function setUnits($units) {
+        $this->units = $units;
 
         return $this;
     }
 
     /**
-     * Get visible
+     * Get units
      *
-     * @return integer
+     * @return string
      */
-    public function getVisible() {
-        return $this->visible;
+    public function getUnits() {
+        return $this->units;
     }
 
     /**
@@ -265,7 +244,7 @@ class Image {
      *
      * @param integer $active
      *
-     * @return Image
+     * @return Product
      */
     public function setActive($active) {
         $this->active = $active;
@@ -287,7 +266,7 @@ class Image {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Image
+     * @return Product
      */
     public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
@@ -305,11 +284,33 @@ class Image {
     }
 
     /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Product
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null) {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+    /**
      * Set gallery
      *
      * @param \AppBundle\Entity\Gallery $gallery
      *
-     * @return Image
+     * @return Product
      */
     public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
         $this->gallery = $gallery;

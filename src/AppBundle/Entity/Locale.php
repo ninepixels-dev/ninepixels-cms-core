@@ -8,11 +8,11 @@ use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ninepixels_options")
+ * @ORM\Table(name="ninepixels_locale")
  * 
  * @ExclusionPolicy("all")
  */
-class Option {
+class Locale {
 
     /**
      * @ORM\Column(type="integer")
@@ -32,19 +32,13 @@ class Option {
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $group;
+    private $language;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=2, nullable=true)
      * @Expose
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $value;
+    private $code;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
@@ -66,44 +60,63 @@ class Option {
         }
     }
 
+
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set name
+     * Set language
      *
-     * @param string $name
+     * @param string $language
      *
-     * @return Option
+     * @return Locale
      */
-    public function setName($name) {
-        $this->name = $name;
+    public function setLanguage($language)
+    {
+        $this->language = $language;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get language
      *
      * @return string
      */
-    public function getName() {
-        return $this->name;
+    public function getLanguage()
+    {
+        return $this->language;
     }
 
     /**
-     * Get value
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Locale
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
      *
      * @return string
      */
-    public function getValue() {
-        return $this->value;
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
@@ -111,9 +124,10 @@ class Option {
      *
      * @param integer $active
      *
-     * @return Option
+     * @return Locale
      */
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
 
         return $this;
@@ -124,7 +138,8 @@ class Option {
      *
      * @return integer
      */
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
     }
 
@@ -133,9 +148,10 @@ class Option {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Option
+     * @return Locale
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -146,30 +162,8 @@ class Option {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
-
-    /**
-     * Set group
-     *
-     * @param string $group
-     *
-     * @return Option
-     */
-    public function setGroup($group) {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return string
-     */
-    public function getGroup() {
-        return $this->group;
-    }
-
 }

@@ -3,19 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @Vich\Uploadable
- * @ORM\Table(name="ninepixels_images")
+ * @ORM\Table(name="ninepixels_blog")
  * 
  * @ExclusionPolicy("all")
  */
-class Image {
+class Blog {
 
     /**
      * @ORM\Column(type="integer")
@@ -32,22 +29,16 @@ class Image {
     private $user;
 
     /**
-     * @Vich\UploadableField(mapping="file", fileNameProperty="url")
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
-    private $file;
-
-    /**
-     * @ORM\Column(type="string", length=128, nullable=true)
-     * @Expose
-     */
-    private $url;
+    private $template;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $alt;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -56,23 +47,33 @@ class Image {
     private $title;
 
     /**
+     * @ORM\Column(type="string", length=10960, nullable=true)
+     * @Expose
+     */
+    private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image", referencedColumnName="id")
+     * @Expose
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="string", length=256, nullable=true)
      * @Expose
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     * @Expose
+     * @ORM\Column(type="datetime")
      */
-    private $size;
+    private $created;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Gallery")
-     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
-     * @Expose
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $gallery;
+    private $edited;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
@@ -81,7 +82,7 @@ class Image {
     private $visible;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
     private $active;
@@ -100,76 +101,63 @@ class Image {
         }
     }
 
+
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set file
+     * Set template
      *
-     * @param string $file
+     * @param string $template
      *
-     * @return Documents
+     * @return Blog
      */
-    public function setFile(File $file = null) {
-        $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * @return File|null
-     */
-    public function getFile() {
-        return $this->file;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return Image
-     */
-    public function setUrl($url) {
-        $this->url = $url;
+    public function setTemplate($template)
+    {
+        $this->template = $template;
 
         return $this;
     }
 
     /**
-     * Get url
+     * Get template
      *
      * @return string
      */
-    public function getUrl() {
-        return $this->url;
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**
-     * Set alt
+     * Set name
      *
-     * @param string $alt
+     * @param string $name
      *
-     * @return Image
+     * @return Blog
      */
-    public function setAlt($alt) {
-        $this->alt = $alt;
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get alt
+     * Get name
      *
      * @return string
      */
-    public function getAlt() {
-        return $this->alt;
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -177,9 +165,10 @@ class Image {
      *
      * @param string $title
      *
-     * @return Image
+     * @return Blog
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
@@ -190,8 +179,33 @@ class Image {
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Blog
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -199,9 +213,10 @@ class Image {
      *
      * @param string $description
      *
-     * @return Image
+     * @return Blog
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -212,30 +227,57 @@ class Image {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set size
+     * Set created
      *
-     * @param string $size
+     * @param \DateTime $created
      *
-     * @return Image
+     * @return Blog
      */
-    public function setSize($size) {
-        $this->size = $size;
+    public function setCreated($created)
+    {
+        $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get size
+     * Get created
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getSize() {
-        return $this->size;
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set edited
+     *
+     * @param \DateTime $edited
+     *
+     * @return Blog
+     */
+    public function setEdited($edited)
+    {
+        $this->edited = $edited;
+
+        return $this;
+    }
+
+    /**
+     * Get edited
+     *
+     * @return \DateTime
+     */
+    public function getEdited()
+    {
+        return $this->edited;
     }
 
     /**
@@ -243,9 +285,10 @@ class Image {
      *
      * @param integer $visible
      *
-     * @return Image
+     * @return Blog
      */
-    public function setVisible($visible) {
+    public function setVisible($visible)
+    {
         $this->visible = $visible;
 
         return $this;
@@ -256,7 +299,8 @@ class Image {
      *
      * @return integer
      */
-    public function getVisible() {
+    public function getVisible()
+    {
         return $this->visible;
     }
 
@@ -265,9 +309,10 @@ class Image {
      *
      * @param integer $active
      *
-     * @return Image
+     * @return Blog
      */
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
 
         return $this;
@@ -278,7 +323,8 @@ class Image {
      *
      * @return integer
      */
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
     }
 
@@ -287,9 +333,10 @@ class Image {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Image
+     * @return Blog
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -300,30 +347,32 @@ class Image {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
     /**
-     * Set gallery
+     * Set image
      *
-     * @param \AppBundle\Entity\Gallery $gallery
+     * @param \AppBundle\Entity\Image $image
      *
-     * @return Image
+     * @return Blog
      */
-    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
-        $this->gallery = $gallery;
+    public function setImage(\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Get gallery
+     * Get image
      *
-     * @return \AppBundle\Entity\Gallery
+     * @return \AppBundle\Entity\Image
      */
-    public function getGallery() {
-        return $this->gallery;
+    public function getImage()
+    {
+        return $this->image;
     }
-
 }
