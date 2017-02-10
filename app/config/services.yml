@@ -2,3 +2,9 @@ services:
     app.base_manager:
         class: AppBundle\Services\BaseManager
         arguments: ['@doctrine.orm.entity_manager']
+        
+    app.upload_listener:
+        class: AppBundle\EventListener\UploadListener
+        arguments: ['@liip_imagine.controller']
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_upload }

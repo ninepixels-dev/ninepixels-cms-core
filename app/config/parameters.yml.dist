@@ -12,3 +12,6 @@ parameters:
     mailer_password: null
     mailer_port: 587
     secret: NinePixelSeedApplication
+    
+    image_gallery: [1280, 780]
+    image_thumbnail: [360, 220]

@@ -79,6 +79,9 @@ fos_user:
     db_driver: orm
     firewall_name: api
     user_class: AppBundle\Entity\User
+    from_email:
+        address:        noreply@ninepixels.io
+        sender_name:    Nine Pixels Registration
 
 fos_oauth_server:
     db_driver:           orm
@@ -89,6 +92,8 @@ fos_oauth_server:
 
     service:
         user_provider: fos_user.user_manager
+        options:
+            access_token_lifetime: 7200
         
 nelmio_cors:
     paths:
@@ -106,3 +111,26 @@ vich_uploader:
             uri_prefix:         /uploads
             upload_destination: 'uploads'
             namer:              vich_uploader.namer_uniqid
+            
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: "uploads"
+                
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../web/uploads
+
+    filter_sets:
+        thumbs:
+            quality: 80
+            filters:
+                strip: ~
+                thumbnail: { size: %image_thumbnail%, mode: inset }
+        gallery:
+            quality: 80
+            filters:
+                strip: ~
+                thumbnail: { size: %image_gallery%, mode: inset }

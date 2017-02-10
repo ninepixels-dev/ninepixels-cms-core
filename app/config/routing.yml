@@ -1,6 +1,9 @@
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+    
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

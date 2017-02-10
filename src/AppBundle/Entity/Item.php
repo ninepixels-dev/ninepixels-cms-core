@@ -68,28 +68,28 @@ class Item {
     private $classes;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
      * @Expose
      */
     private $position;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
      * @Expose
      */
     private $editable;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
+     * @Expose
+     */
+    private $visible;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
      * @Expose
      */
     private $active;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
-     * @Expose
-     */
-    private $visible;
 
     /**
      * Set values dinamicaly
