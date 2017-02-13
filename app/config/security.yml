@@ -16,6 +16,12 @@ security:
             fos_oauth: true
             stateless: true
             anonymous: false
+
+        mailer:
+            pattern: ^/sendmail
+            methods: ['POST']
+            security: false
+            anonymous: true
             
         users:
             pattern: ^/users

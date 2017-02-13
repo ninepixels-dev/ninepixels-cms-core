@@ -18,6 +18,11 @@ confirm_user:
     defaults: { _controller: AppBundle:Register:confirm }
     methods: GET
 
+mailer:
+    type: rest
+    resource: AppBundle\Controller\MailerController
+    methods: POST
+
 users:
     type: rest
     resource: AppBundle\Controller\UserController
