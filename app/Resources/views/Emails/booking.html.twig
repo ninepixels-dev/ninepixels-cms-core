@@ -1,0 +1,77 @@
+Poštovani,
+<br><br>
+Novi zahtev za booking preko sajta je kreiran.
+<br><br>
+Molim Vas da potvrdite rezervaciju klijentu na sledeću email adresu: <a href="mailto:{{email}}">{{email}}</a> ili putem telefona {{mobile}};
+<h3>ID Rezervacije: {{reservation_id}}</h3>
+Informacije o nalogu:
+<table>
+    <tr>
+        <th colspan="2">Informacije o klijentu</th>
+    </tr>
+    <tr>
+        <td>First name</td>
+        <td>{{ first_name }}</td>
+    </tr>
+    <tr>
+        <td>Last name</td>
+        <td>{{ last_name }}</td>
+    </tr>
+    <tr>
+        <td>Mobile</td>
+        <td>{{ mobile }}</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{ email }}</td>
+    </tr>
+    <tr>
+        <td>Country</td>
+        <td>{{ country }}</td>
+    </tr>
+    <tr>
+        <th colspan="2">Informacije o plaćanju</th>
+    </tr>
+    <tr>
+        <td>Name on Card</td>
+        <td>{{ name_on_card }}</td>
+    </tr>
+    <tr>
+        <td>Credit Card number</td>
+        <td>{{ credit_card_number }}</td>
+    </tr>
+    <tr>
+        <td>Credit Card Expiration Date</td>
+        <td>{{ credit_card_date }}</td>
+    </tr>
+    <tr>
+        <th colspan="2">Informacije o boravku</th>
+    </tr>
+    <tr>
+        <td>Check in</td>
+        <td>{{ check_in }}</td>
+    </tr>
+    <tr>
+        <td>Check out</td>
+        <td>{{ check_out }}</td>
+    </tr>
+    <tr>
+        <td>Persons</td>
+        <td>{{ persons }}</td>
+    </tr>
+    <tr>
+        <td>Room</td>
+        <td>{{ room }}</td>
+    </tr>
+</table>
+
+<style>
+    table {
+        border: 1px solid grey;
+        border-collapse: collapse;
+    }
+    td, th {
+        border: 1px solid grey;
+        padding: 10px;
+    }
+</style>

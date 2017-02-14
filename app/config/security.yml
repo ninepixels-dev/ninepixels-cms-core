@@ -18,11 +18,11 @@ security:
             anonymous: false
 
         mailer:
-            pattern: ^/sendmail
+            pattern: ^/mailer
             methods: ['POST']
             security: false
             anonymous: true
-            
+           
         users:
             pattern: ^/users
             fos_oauth: true

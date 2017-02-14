@@ -22,6 +22,7 @@ mailer:
     type: rest
     resource: AppBundle\Controller\MailerController
     methods: POST
+    prefix: mailer
 
 users:
     type: rest
