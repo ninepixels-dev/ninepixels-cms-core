@@ -41,7 +41,7 @@ class Option {
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=512, nullable=true)
      * @Expose
      */
     private $value;

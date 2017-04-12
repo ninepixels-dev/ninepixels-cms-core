@@ -73,6 +73,7 @@ class BaseManager {
      * 
      */
     public function getByWithoutAuth($repo, $param) {
+        $param['active'] = '1';
         $obj = $this->em
                 ->getRepository($repo)
                 ->findBy($param);

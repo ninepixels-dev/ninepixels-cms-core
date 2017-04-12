@@ -53,6 +53,12 @@ class Blog {
     private $content;
 
     /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     * @Expose
+     */
+    private $tags;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Image")
      * @ORM\JoinColumn(name="image", referencedColumnName="id")
      * @Expose
@@ -67,6 +73,7 @@ class Blog {
 
     /**
      * @ORM\Column(type="datetime")
+     * @Expose
      */
     private $created;
 
@@ -374,5 +381,29 @@ class Blog {
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param string $tags
+     *
+     * @return Blog
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

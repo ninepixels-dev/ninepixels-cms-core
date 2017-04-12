@@ -32,6 +32,27 @@ class PageController extends FOSRestController {
     }
 
     /**
+     * Get all child pages from page
+     * 
+     * Path: /pages/{id}/
+     * Method; GET
+     * 
+     * @return {json} List of pages
+     * 
+     * @throws NotFoundHttpException when there is no page in database
+     */
+    public function getPagesChildAction($slug) {
+        $page = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Page', array('parent' => $slug));
+
+        if (!$page) {
+            throw new HttpException(204, "There is no child pages for particular page");
+        }
+
+        return $this->handleView($this->view($page));
+    }
+
+    /**
      * Get specific page requested by ID
      * 
      * Path: /pages/{id}
@@ -77,6 +98,11 @@ class PageController extends FOSRestController {
                     ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
         }
 
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        }
+
         $result = $this->getBaseManager()
                 ->set($page, $data, $this->getLoggedUser());
 
@@ -115,6 +141,13 @@ class PageController extends FOSRestController {
                     ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
         } else {
             $data['image'] = NULL;
+        }
+
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        } else {
+            $data['gallery'] = NULL;
         }
 
         $result = $this->getBaseManager()

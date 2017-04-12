@@ -55,6 +55,13 @@ class Page {
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Gallery")
+     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
+     * @Expose
+     */
+    private $gallery;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
@@ -496,5 +503,29 @@ class Page {
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set gallery
+     *
+     * @param \AppBundle\Entity\Gallery $gallery
+     *
+     * @return Page
+     */
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null)
+    {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Get gallery
+     *
+     * @return \AppBundle\Entity\Gallery
+     */
+    public function getGallery()
+    {
+        return $this->gallery;
     }
 }

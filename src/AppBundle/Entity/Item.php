@@ -55,6 +55,13 @@ class Item {
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Gallery")
+     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
+     * @Expose
+     */
+    private $gallery;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Locale")
      * @ORM\JoinColumn(name="locale", referencedColumnName="id", nullable=true)
      * @Expose
@@ -66,6 +73,18 @@ class Item {
      * @Expose
      */
     private $classes;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $link;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $video;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
@@ -356,4 +375,72 @@ class Item {
         return $this->locale;
     }
 
+    /**
+     * Set link
+     *
+     * @param string $link
+     *
+     * @return Item
+     */
+    public function setLink($link) {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink() {
+        return $this->link;
+    }
+
+    /**
+     * Set video
+     *
+     * @param string $video
+     *
+     * @return Item
+     */
+    public function setVideo($video) {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return string
+     */
+    public function getVideo() {
+        return $this->video;
+    }
+
+
+    /**
+     * Set gallery
+     *
+     * @param \AppBundle\Entity\Gallery $gallery
+     *
+     * @return Item
+     */
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null)
+    {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Get gallery
+     *
+     * @return \AppBundle\Entity\Gallery
+     */
+    public function getGallery()
+    {
+        return $this->gallery;
+    }
 }

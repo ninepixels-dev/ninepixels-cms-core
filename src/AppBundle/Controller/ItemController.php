@@ -41,13 +41,13 @@ class ItemController extends FOSRestController {
      * 
      * @throws NotFoundHttpException when there is no item in database
      */
-    public function getPagesItemsAction($slug) {
+    public function getPagesItemsAction($slug, Request $request) {
         if ($slug === '0') {
             $item = $this->getBaseManager()
-                    ->getByWithoutAuth('AppBundle:Item', array('page' => NULL, 'locale' => NULL));
+                    ->getByWithoutAuth('AppBundle:Item', array_merge(array('page' => NULL, 'locale' => NULL), $request->query->all()));
         } else {
             $item = $this->getBaseManager()
-                    ->getByWithoutAuth('AppBundle:Item', array('page' => $slug, 'locale' => NULL));
+                    ->getByWithoutAuth('AppBundle:Item', array_merge(array('page' => $slug, 'locale' => NULL), $request->query->all()));
         }
 
         if (!$item) {
@@ -145,6 +145,11 @@ class ItemController extends FOSRestController {
                     ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
         }
 
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        }
+
         $item->setVisible(1);
 
         $result = $this->getBaseManager()
@@ -185,6 +190,13 @@ class ItemController extends FOSRestController {
                     ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
         } else {
             $data['image'] = NULL;
+        }
+
+        if (isset($data['gallery'])) {
+            $data['gallery'] = $this->getBaseManager()
+                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
+        } else {
+            $data['gallery'] = NULL;
         }
 
         $result = $this->getBaseManager()
