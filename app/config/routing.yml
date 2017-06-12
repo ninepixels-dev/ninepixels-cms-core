@@ -63,3 +63,7 @@ products:
 locale:
     type: rest
     resource: AppBundle\Controller\LocaleController
+
+localization:
+    type: rest
+    resource: AppBundle\Controller\LocalizationController
