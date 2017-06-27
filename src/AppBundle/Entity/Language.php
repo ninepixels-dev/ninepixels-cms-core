@@ -8,11 +8,11 @@ use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ninepixels_components")
+ * @ORM\Table(name="ninepixels_languages")
  * 
  * @ExclusionPolicy("all")
  */
-class Component {
+class Language {
 
     /**
      * @ORM\Column(type="integer")
@@ -35,10 +35,10 @@ class Component {
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=256, nullable=true)
+     * @ORM\Column(type="string", length=2, nullable=true)
      * @Expose
      */
-    private $settings;
+    private $code;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
@@ -60,12 +60,14 @@ class Component {
         }
     }
 
+
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -74,9 +76,10 @@ class Component {
      *
      * @param string $name
      *
-     * @return Component
+     * @return Language
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -87,30 +90,33 @@ class Component {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * Set settings
+     * Set code
      *
-     * @param string $settings
+     * @param string $code
      *
-     * @return Component
+     * @return Language
      */
-    public function setSettings($settings) {
-        $this->settings = $settings;
+    public function setCode($code)
+    {
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get settings
+     * Get code
      *
      * @return string
      */
-    public function getSettings() {
-        return $this->settings;
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
@@ -118,9 +124,10 @@ class Component {
      *
      * @param integer $active
      *
-     * @return Component
+     * @return Language
      */
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
 
         return $this;
@@ -131,7 +138,8 @@ class Component {
      *
      * @return integer
      */
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
     }
 
@@ -140,9 +148,10 @@ class Component {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Component
+     * @return Language
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -153,8 +162,8 @@ class Component {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
-
 }

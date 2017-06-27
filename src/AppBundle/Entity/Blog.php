@@ -108,14 +108,12 @@ class Blog {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -126,8 +124,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setTemplate($template)
-    {
+    public function setTemplate($template) {
         $this->template = $template;
 
         return $this;
@@ -138,8 +135,7 @@ class Blog {
      *
      * @return string
      */
-    public function getTemplate()
-    {
+    public function getTemplate() {
         return $this->template;
     }
 
@@ -150,8 +146,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -162,8 +157,7 @@ class Blog {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -174,8 +168,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -186,8 +179,7 @@ class Blog {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -198,8 +190,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
@@ -210,8 +201,7 @@ class Blog {
      *
      * @return string
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -222,8 +212,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -234,8 +223,7 @@ class Blog {
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -246,8 +234,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -258,8 +245,7 @@ class Blog {
      *
      * @return \DateTime
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -270,8 +256,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setEdited($edited)
-    {
+    public function setEdited($edited) {
         $this->edited = $edited;
 
         return $this;
@@ -282,8 +267,7 @@ class Blog {
      *
      * @return \DateTime
      */
-    public function getEdited()
-    {
+    public function getEdited() {
         return $this->edited;
     }
 
@@ -294,8 +278,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
 
         return $this;
@@ -306,8 +289,7 @@ class Blog {
      *
      * @return integer
      */
-    public function getVisible()
-    {
+    public function getVisible() {
         return $this->visible;
     }
 
@@ -318,8 +300,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -330,8 +311,7 @@ class Blog {
      *
      * @return integer
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -342,8 +322,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -354,8 +333,7 @@ class Blog {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -366,8 +344,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
-    {
+    public function setImage(\AppBundle\Entity\Image $image = null) {
         $this->image = $image;
 
         return $this;
@@ -378,8 +355,7 @@ class Blog {
      *
      * @return \AppBundle\Entity\Image
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -390,8 +366,7 @@ class Blog {
      *
      * @return Blog
      */
-    public function setTags($tags)
-    {
+    public function setTags($tags) {
         $this->tags = $tags;
 
         return $this;
@@ -402,8 +377,8 @@ class Blog {
      *
      * @return string
      */
-    public function getTags()
-    {
+    public function getTags() {
         return $this->tags;
     }
+
 }

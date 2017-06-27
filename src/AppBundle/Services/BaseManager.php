@@ -2,6 +2,11 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Log;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 class BaseManager {
 
     protected $em;
@@ -15,7 +20,6 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $user Currently logged user
-     * 
      * @retun {Object} Data
      * 
      */
@@ -24,6 +28,10 @@ class BaseManager {
                 ->getRepository($repo)
                 ->findByUser($user);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         return $obj;
     }
 
@@ -31,8 +39,6 @@ class BaseManager {
      * Get all data from database without authorization
      * 
      * @param $repo Name of repo where to look
-     * @param $user Currently logged user
-     * 
      * @retun {Object} Data
      * 
      */
@@ -40,6 +46,10 @@ class BaseManager {
         $obj = $this->em
                 ->getRepository($repo)
                 ->findBy(array('active' => 1));
+
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
 
         return $obj;
     }
@@ -49,7 +59,7 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $param {Array} Parameters to match
-     * 
+     * @param $user Currently logged user
      * @retun {Object} Data
      * 
      */
@@ -60,6 +70,10 @@ class BaseManager {
                 ->getRepository($repo)
                 ->findBy($param);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         return $obj;
     }
 
@@ -68,7 +82,6 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $param {Array} Parameters to match
-     * 
      * @retun {Object} Data
      * 
      */
@@ -78,6 +91,10 @@ class BaseManager {
                 ->getRepository($repo)
                 ->findBy($param);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         return $obj;
     }
 
@@ -86,7 +103,7 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $param {Array} Parameters to match
-     * 
+     * @param $user Currently logged user
      * @retun {Object} Data
      * 
      */
@@ -97,6 +114,10 @@ class BaseManager {
                 ->getRepository($repo)
                 ->findOneBy($param);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         return $obj;
     }
 
@@ -105,7 +126,6 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $param {Array} Parameters to match
-     * 
      * @retun {Object} Data
      * 
      */
@@ -113,6 +133,10 @@ class BaseManager {
         $obj = $this->em
                 ->getRepository($repo)
                 ->findOneBy($param);
+
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
 
         return $obj;
     }
@@ -122,7 +146,7 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $id Identifier
-     * 
+     * @param $user Currently logged user
      * @retun {Object} Data
      * 
      */
@@ -131,8 +155,12 @@ class BaseManager {
                 ->getRepository($repo)
                 ->find($id);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         if ($user->getId() !== $obj->getUser()->getId()) {
-            return 401;
+            throw new AccessDeniedException();
         }
 
         return $obj;
@@ -143,7 +171,6 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $id Identifier
-     * 
      * @retun {Object} Data
      * 
      */
@@ -152,6 +179,10 @@ class BaseManager {
                 ->getRepository($repo)
                 ->find($id);
 
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
+        }
+
         return $obj;
     }
 
@@ -159,13 +190,13 @@ class BaseManager {
      * Set new data in database
      * 
      * @param $obj Class of object
+     * @param $repo Name of repo where to look
      * @param $data Data to be defined
      * @param $user Currently logged user
-     * 
      * @retun {Object} Newly created object
      * 
      */
-    public function set($obj, $data, $user) {
+    public function set($obj, $repo, $data, $user) {
         $obj->setUser($user);
         $obj->setActive(1);
 
@@ -174,10 +205,15 @@ class BaseManager {
         }
 
         $this->em->persist($obj);
-
         $this->em->flush();
 
-        return $obj;
+        $this->logAction('Item ' . $obj->getId() . ' created in ' . $repo, $user);
+
+        return array(
+            'status' => 201,
+            'item' => $obj,
+            'message' => 'New item created'
+        );
     }
 
     /**
@@ -187,19 +223,18 @@ class BaseManager {
      * @param $repo Name of repo whete to look
      * @param $id Identifier    
      * @param $user Currently logged user
-     * 
      * @retun {Object} Updated object
      * 
      */
     public function update($data, $repo, $id, $user) {
         $obj = $this->em->getRepository($repo)->find($id);
 
-        if (!$obj) {
-            return 404;
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
         }
 
         if ($user->getId() !== $obj->getUser()->getId()) {
-            return 401;
+            throw new AccessDeniedException();
         }
 
         foreach ($data as $key => $value) {
@@ -208,7 +243,13 @@ class BaseManager {
 
         $this->em->flush();
 
-        return $obj;
+        $this->logAction('Item ' . $obj->getId() . ' updated in ' . $repo, $user);
+
+        return array(
+            'status' => 200,
+            'item' => $obj,
+            'message' => 'Item updated'
+        );
     }
 
     /**
@@ -221,18 +262,25 @@ class BaseManager {
      */
     public function delete($repo, $id, $user) {
         $obj = $this->em->getRepository($repo)->find($id);
+        $obj->setActive(0);
 
-        if (!$obj) {
-            return 404;
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
         }
 
         if ($user->getId() !== $obj->getUser()->getId()) {
-            return 401;
+            throw new AccessDeniedException();
         }
 
-        $obj->setActive(0);
-
         $this->em->flush();
+
+        $this->logAction('Item ' . $obj->getId() . ' deleted in ' . $repo, $user);
+
+        return array(
+            'status' => 200,
+            'item' => $obj,
+            'message' => 'Item deleted'
+        );
     }
 
     /**
@@ -246,15 +294,41 @@ class BaseManager {
     public function hardDelete($repo, $id, $user) {
         $obj = $this->em->getRepository($repo)->find($id);
 
-        if (!$obj) {
-            return 404;
+        if (empty($obj)) {
+            throw new HttpException(204, "There is no items for requested data");
         }
 
         if ($user->getId() !== $obj->getUser()->getId()) {
-            return 401;
+            throw new AccessDeniedException();
         }
 
         $this->em->remove($obj);
+        $this->em->flush();
+
+        $this->logAction('Item ' . $obj->getId() . ' hard deleted in ' . $repo, $user);
+
+        return array(
+            'status' => 200,
+            'item' => $obj,
+            'message' => 'Item hard deleted'
+        );
+    }
+
+    /**
+     * 
+     * @param $message Log message
+     * @param $user Currently logged user
+     */
+    public function logAction($message, $user) {
+        $request = Request::createFromGlobals();
+
+        $log = new Log();
+        $log->setUser($user);
+        $log->setIp($request->getClientIp());
+        $log->setDescription($message);
+        $log->setDate(new \DateTime());
+
+        $this->em->persist($log);
         $this->em->flush();
     }
 

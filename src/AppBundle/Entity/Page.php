@@ -62,24 +62,6 @@ class Page {
     private $gallery;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $navigation;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=256, nullable=true)
-     * @Expose
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
@@ -140,8 +122,7 @@ class Page {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -152,8 +133,7 @@ class Page {
      *
      * @return Page
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -164,8 +144,7 @@ class Page {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -176,8 +155,7 @@ class Page {
      *
      * @return Page
      */
-    public function setTemplate($template)
-    {
+    public function setTemplate($template) {
         $this->template = $template;
 
         return $this;
@@ -188,81 +166,8 @@ class Page {
      *
      * @return string
      */
-    public function getTemplate()
-    {
+    public function getTemplate() {
         return $this->template;
-    }
-
-    /**
-     * Set navigation
-     *
-     * @param string $navigation
-     *
-     * @return Page
-     */
-    public function setNavigation($navigation)
-    {
-        $this->navigation = $navigation;
-
-        return $this;
-    }
-
-    /**
-     * Get navigation
-     *
-     * @return string
-     */
-    public function getNavigation()
-    {
-        return $this->navigation;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Page
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Page
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -272,8 +177,7 @@ class Page {
      *
      * @return Page
      */
-    public function setShowHeader($showHeader)
-    {
+    public function setShowHeader($showHeader) {
         $this->showHeader = $showHeader;
 
         return $this;
@@ -284,8 +188,7 @@ class Page {
      *
      * @return integer
      */
-    public function getShowHeader()
-    {
+    public function getShowHeader() {
         return $this->showHeader;
     }
 
@@ -296,8 +199,7 @@ class Page {
      *
      * @return Page
      */
-    public function setShowNavigation($showNavigation)
-    {
+    public function setShowNavigation($showNavigation) {
         $this->showNavigation = $showNavigation;
 
         return $this;
@@ -308,8 +210,7 @@ class Page {
      *
      * @return integer
      */
-    public function getShowNavigation()
-    {
+    public function getShowNavigation() {
         return $this->showNavigation;
     }
 
@@ -320,8 +221,7 @@ class Page {
      *
      * @return Page
      */
-    public function setShowFooter($showFooter)
-    {
+    public function setShowFooter($showFooter) {
         $this->showFooter = $showFooter;
 
         return $this;
@@ -332,8 +232,7 @@ class Page {
      *
      * @return integer
      */
-    public function getShowFooter()
-    {
+    public function getShowFooter() {
         return $this->showFooter;
     }
 
@@ -344,8 +243,7 @@ class Page {
      *
      * @return Page
      */
-    public function setShowInNavigation($showInNavigation)
-    {
+    public function setShowInNavigation($showInNavigation) {
         $this->showInNavigation = $showInNavigation;
 
         return $this;
@@ -356,8 +254,7 @@ class Page {
      *
      * @return integer
      */
-    public function getShowInNavigation()
-    {
+    public function getShowInNavigation() {
         return $this->showInNavigation;
     }
 
@@ -368,8 +265,7 @@ class Page {
      *
      * @return Page
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
 
         return $this;
@@ -380,8 +276,7 @@ class Page {
      *
      * @return integer
      */
-    public function getVisible()
-    {
+    public function getVisible() {
         return $this->visible;
     }
 
@@ -392,8 +287,7 @@ class Page {
      *
      * @return Page
      */
-    public function setPosition($position)
-    {
+    public function setPosition($position) {
         $this->position = $position;
 
         return $this;
@@ -404,8 +298,7 @@ class Page {
      *
      * @return integer
      */
-    public function getPosition()
-    {
+    public function getPosition() {
         return $this->position;
     }
 
@@ -416,8 +309,7 @@ class Page {
      *
      * @return Page
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -428,8 +320,7 @@ class Page {
      *
      * @return integer
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -440,8 +331,7 @@ class Page {
      *
      * @return Page
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -452,8 +342,7 @@ class Page {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -464,8 +353,7 @@ class Page {
      *
      * @return Page
      */
-    public function setParent(\AppBundle\Entity\Page $parent = null)
-    {
+    public function setParent(\AppBundle\Entity\Page $parent = null) {
         $this->parent = $parent;
 
         return $this;
@@ -476,8 +364,7 @@ class Page {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -488,8 +375,7 @@ class Page {
      *
      * @return Page
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
-    {
+    public function setImage(\AppBundle\Entity\Image $image = null) {
         $this->image = $image;
 
         return $this;
@@ -500,8 +386,7 @@ class Page {
      *
      * @return \AppBundle\Entity\Image
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -512,8 +397,7 @@ class Page {
      *
      * @return Page
      */
-    public function setGallery(\AppBundle\Entity\Gallery $gallery = null)
-    {
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
         $this->gallery = $gallery;
 
         return $this;
@@ -524,8 +408,8 @@ class Page {
      *
      * @return \AppBundle\Entity\Gallery
      */
-    public function getGallery()
-    {
+    public function getGallery() {
         return $this->gallery;
     }
+
 }

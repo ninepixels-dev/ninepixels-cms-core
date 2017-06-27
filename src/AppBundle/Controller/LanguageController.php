@@ -2,68 +2,68 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Gallery;
+use AppBundle\Entity\Language;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 
-class GalleryController extends FOSRestController {
+class LanguageController extends FOSRestController {
 
     /**
-     * Path: /galleries
+     * Path: /languages
      * Method: GET
      */
-    public function getGalleriesAction() {
+    public function getLanguagesAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Gallery');
+                ->getAllWithoutAuth('AppBundle:Language');
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /galleries/{id}
+     * Path: /languages/{id}
      * Method: GET
      */
-    public function getGalleryAction($id) {
+    public function getLanguageAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Gallery', $id);
+                ->getWithoutAuth('AppBundle:Language', $id);
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /galleries
+     * Path: /languages
      * Method: POST
      */
-    public function postGalleryAction(Request $request) {
-        $item = new Gallery();
+    public function postLanguageAction(Request $request) {
+        $item = new Language();
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Gallery', $item, $data, $this->getLoggedUser());
+                ->set('AppBundle:Language', $item, $data, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /galleries/{id}
+     * Path: /languages/{id}
      * Method: PUT
      */
-    public function putGalleryAction($id, Request $request) {
+    public function putLanguageAction($id, Request $request) {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Gallery', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Language', $id, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /galleries/{id}
+     * Path: /languages/{id}
      * Method: DELETE
      */
-    public function deleteGalleryAction($id) {
+    public function deleteLanguageAction($id) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Gallery', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Language', $id, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }

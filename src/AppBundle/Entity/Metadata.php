@@ -8,11 +8,11 @@ use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ninepixels_locales")
+ * @ORM\Table(name="ninepixels_metadata")
  * 
  * @ExclusionPolicy("all")
  */
-class Locale {
+class Metadata {
 
     /**
      * @ORM\Column(type="integer")
@@ -29,23 +29,36 @@ class Locale {
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Page")
+     * @ORM\JoinColumn(name="page", referencedColumnName="id")
+     * @Expose
+     */
+    private $page;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumn(name="language", referencedColumnName="id")
+     * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=true)
      * @Expose
      */
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $origin;
+    private $navigation;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $translate;
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 1})
@@ -79,51 +92,75 @@ class Locale {
     }
 
     /**
-     * Set origin
+     * Set navigation
      *
-     * @param string $origin
+     * @param string $navigation
      *
-     * @return Locale
+     * @return Metadata
      */
-    public function setOrigin($origin)
+    public function setNavigation($navigation)
     {
-        $this->origin = $origin;
+        $this->navigation = $navigation;
 
         return $this;
     }
 
     /**
-     * Get origin
+     * Get navigation
      *
      * @return string
      */
-    public function getOrigin()
+    public function getNavigation()
     {
-        return $this->origin;
+        return $this->navigation;
     }
 
     /**
-     * Set translate
+     * Set title
      *
-     * @param string $translate
+     * @param string $title
      *
-     * @return Locale
+     * @return Metadata
      */
-    public function setTranslate($translate)
+    public function setTitle($title)
     {
-        $this->translate = $translate;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get translate
+     * Get title
      *
      * @return string
      */
-    public function getTranslate()
+    public function getTitle()
     {
-        return $this->translate;
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Metadata
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -131,7 +168,7 @@ class Locale {
      *
      * @param integer $active
      *
-     * @return Locale
+     * @return Metadata
      */
     public function setActive($active)
     {
@@ -155,7 +192,7 @@ class Locale {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Locale
+     * @return Metadata
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {
@@ -175,11 +212,35 @@ class Locale {
     }
 
     /**
+     * Set page
+     *
+     * @param \AppBundle\Entity\Page $page
+     *
+     * @return Metadata
+     */
+    public function setPage(\AppBundle\Entity\Page $page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \AppBundle\Entity\Page
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
      * Set language
      *
      * @param \AppBundle\Entity\Language $language
      *
-     * @return Locale
+     * @return Metadata
      */
     public function setLanguage(\AppBundle\Entity\Language $language = null)
     {

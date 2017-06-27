@@ -8,11 +8,11 @@ use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ninepixels_localization")
+ * @ORM\Table(name="ninepixels_logs")
  * 
  * @ExclusionPolicy("all")
  */
-class Localization {
+class Log {
 
     /**
      * @ORM\Column(type="integer")
@@ -29,28 +29,22 @@ class Localization {
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Locale")
-     * @ORM\JoinColumn(name="locale", referencedColumnName="id")
-     */
-    private $locale;
-
-    /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $origin;
+    private $ip;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $translate;
+    private $description;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="datetime")
      * @Expose
      */
-    private $active;
+    private $date;
 
     /**
      * Set values dinamicaly
@@ -76,69 +70,69 @@ class Localization {
     }
 
     /**
-     * Set origin
+     * Set ip
      *
-     * @param string $origin
+     * @param string $ip
      *
-     * @return Localization
+     * @return Log
      */
-    public function setOrigin($origin) {
-        $this->origin = $origin;
+    public function setIp($ip) {
+        $this->ip = $ip;
 
         return $this;
     }
 
     /**
-     * Get origin
+     * Get ip
      *
      * @return string
      */
-    public function getOrigin() {
-        return $this->origin;
+    public function getIp() {
+        return $this->ip;
     }
 
     /**
-     * Set translate
+     * Set description
      *
-     * @param string $translate
+     * @param string $description
      *
-     * @return Localization
+     * @return Log
      */
-    public function setTranslate($translate) {
-        $this->translate = $translate;
+    public function setDescription($description) {
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get translate
+     * Get description
      *
      * @return string
      */
-    public function getTranslate() {
-        return $this->translate;
+    public function getDescription() {
+        return $this->description;
     }
 
     /**
-     * Set active
+     * Set date
      *
-     * @param integer $active
+     * @param \DateTime $date
      *
-     * @return Localization
+     * @return Log
      */
-    public function setActive($active) {
-        $this->active = $active;
+    public function setDate($date) {
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get active
+     * Get date
      *
-     * @return integer
+     * @return \DateTime
      */
-    public function getActive() {
-        return $this->active;
+    public function getDate() {
+        return $this->date;
     }
 
     /**
@@ -146,7 +140,7 @@ class Localization {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Localization
+     * @return Log
      */
     public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
@@ -161,28 +155,6 @@ class Localization {
      */
     public function getUser() {
         return $this->user;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param \AppBundle\Entity\Locale $locale
-     *
-     * @return Localization
-     */
-    public function setLocale(\AppBundle\Entity\Locale $locale = null) {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return \AppBundle\Entity\Locale
-     */
-    public function getLocale() {
-        return $this->locale;
     }
 
 }

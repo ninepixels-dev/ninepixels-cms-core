@@ -43,6 +43,10 @@ items:
 pages:
     type: rest
     resource: AppBundle\Controller\PageController
+    
+metadatas:
+    type: rest
+    resource: AppBundle\Controller\MetadataController
 
 blogs:
     type: rest
@@ -60,10 +64,10 @@ products:
     type: rest
     resource: AppBundle\Controller\ProductController
 
+languages:
+    type: rest
+    resource: AppBundle\Controller\LanguageController
+
 locale:
     type: rest
     resource: AppBundle\Controller\LocaleController
-
-localization:
-    type: rest
-    resource: AppBundle\Controller\LocalizationController

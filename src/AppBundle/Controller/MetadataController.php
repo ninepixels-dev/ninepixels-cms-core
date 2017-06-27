@@ -2,74 +2,96 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Locale;
+use AppBundle\Entity\Metadata;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 
-class LocaleController extends FOSRestController {
+class MetadataController extends FOSRestController {
 
     /**
-     * Path: /locales
+     * Path: /metadatas
      * Method: GET
      */
-    public function getLocalesAction() {
+    public function getMetadatasAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Locale');
+                ->getAllWithoutAuth('AppBundle:Metadata');
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /locales/{id}
+     * Path: /metadatas/{id}
      * Method: GET
      */
-    public function getLocaleAction($id) {
+    public function getMetadataAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Locale', $id);
+                ->getWithoutAuth('AppBundle:Metadata', $id);
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /locales
+     * Path: /pages{page}/metadatas
+     * Method: GET
+     */
+    public function getPagesMetadatasAction($page) {
+        $view = $this->getBaseManager()
+                ->getOneByWithoutAuth('AppBundle:Metadata', array('page' => $page, 'language' => NULL));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /languages/{lang}/pages{page}/metadatas
+     * Method: GET
+     */
+    public function getLanguagesPagesMetadatasAction($lang, $page) {
+        $view = $this->getBaseManager()
+                ->getOneByWithoutAuth('AppBundle:Metadata', array('page' => $page, 'language' => $lang));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /metadatas
      * Method: POST
      */
-    public function postLocaleAction(Request $request) {
-        $item = new Locale();
+    public function postMetadataAction(Request $request) {
+        $item = new Metadata();
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Language', array('code' => $data['language']), $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Locale', $item, $data, $this->getLoggedUser());
+                ->set('AppBundle:Metadata', $item, $data, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /locales/{id}
+     * Path: /metadatas/{id}
      * Method: PUT
      */
-    public function putLocaleAction($id, Request $request) {
+    public function putMetadataAction($id, Request $request) {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Language', array('code' => $data['language']), $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Locale', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Metadata', $id, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Path: /locales/{id}
+     * Path: /metadatas/{id}
      * Method: DELETE
      */
-    public function deleteLocaleAction($id) {
+    public function deleteMetadataAction($id) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Locale', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Metadata', $id, $this->getLoggedUser());
 
         return $this->handleView($this->view($view));
     }

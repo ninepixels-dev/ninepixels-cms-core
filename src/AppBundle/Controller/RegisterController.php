@@ -31,6 +31,9 @@ class RegisterController extends FOSRestController {
 
         $userManager->updateUser($user);
 
+        $this->getBaseManager()
+                ->logAction('User ' . $data['username'] . ' created', $this->getLoggedUser());
+
         $view = array(
             'status' => 201,
             'item' => $userManager->findUserByUsername($data['username']),
@@ -53,6 +56,9 @@ class RegisterController extends FOSRestController {
 
         $this->get('mailer')->send($message);
 
+        $this->getBaseManager()
+                ->logAction('Confirmation mail to ' . $user->getEmail() . ' sent', $this->getLoggedUser());
+
         return new JsonResponse('Mail to ' . $user->getEmail() . ' sent!');
     }
 
@@ -71,7 +77,24 @@ class RegisterController extends FOSRestController {
 
         $userManager->updateUser($user);
 
+        $this->getBaseManager()
+                ->logAction('User ' . $user->getUsername() . ' activated', $this->getLoggedUser());
+
         return $this->redirect($this->getParameter('client_confirmation'));
+    }
+
+    /**
+     * Initialize BaseManager
+     */
+    protected function getBaseManager() {
+        return $this->get('app.base_manager');
+    }
+
+    /**
+     * Get currently logged user
+     */
+    protected function getLoggedUser() {
+        return $this->get('security.token_storage')->getToken()->getUser();
     }
 
 }

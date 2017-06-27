@@ -5,252 +5,131 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Item;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ItemController extends FOSRestController {
 
     /**
-     * Get all items from currently logged user
-     * 
      * Path: /items
-     * Method; GET
-     * 
-     * @return {json} List of items
-     * 
-     * @throws NotFoundHttpException when there is no item in database
+     * Method: GET
      */
     public function getItemsAction() {
-        $item = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Item', array('locale' => NULL));
-
-        if (!$item) {
-            throw new HttpException(204, "There is no items for particular user");
-        }
-
-        return $this->handleView($this->view($item));
-    }
-
-    /**
-     * Get all items from defined page
-     * 
-     * Path: /pages/{slug}/items
-     * Method; GET
-     * 
-     * @return {json} List of items
-     * 
-     * @throws NotFoundHttpException when there is no item in database
-     */
-    public function getPagesItemsAction($slug, Request $request) {
-        if ($slug === '0') {
-            $item = $this->getBaseManager()
-                    ->getByWithoutAuth('AppBundle:Item', array_merge(array('page' => NULL, 'locale' => NULL), $request->query->all()));
-        } else {
-            $item = $this->getBaseManager()
-                    ->getByWithoutAuth('AppBundle:Item', array_merge(array('page' => $slug, 'locale' => NULL), $request->query->all()));
-        }
-
-        if (!$item) {
-            throw new HttpException(204, "There is no items for particular user");
-        }
-
-        return $this->handleView($this->view($item));
-    }
-
-    /**
-     * Get all items from defined locale
-     * 
-     * Path: /locales/{slug}/items
-     * Method; GET
-     * 
-     * @return {json} List of items
-     * 
-     * @throws NotFoundHttpException when there is no item in database
-     */
-    public function getLocalesItemsAction($slug) {
-        $item = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Item', array('locale' => $slug));
-
-        if (!$item) {
-            throw new HttpException(204, "There is no items for particular user");
-        }
-
-        return $this->handleView($this->view($item));
-    }
-
-    /**
-     * Get all items from defined page
-     * 
-     * Path: /locales/{lang}/pages/{slug}/items
-     * Method; GET
-     * 
-     * @return {json} List of items
-     * 
-     * @throws NotFoundHttpException when there is no item in database
-     */
-    public function getLocalesPagesItemsAction($lang, $slug) {
-        $item = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Item', array('page' => $slug, 'locale' => $lang));
-
-        if (!$item) {
-            throw new HttpException(204, "There is no items for particular user");
-        }
-
-        return $this->handleView($this->view($item));
-    }
-
-    /**
-     * Get specific item requested by ID
-     * 
-     * Path: /items/{id}
-     * Method: GET
-     * 
-     * @param {int} $id Item identifier
-     * @return {json} Item requested by ID
-     * 
-     * @throws NotFoundHttpException when requested item doesn't exist
-     */
-    public function getItemAction($id) {
-        $item = $this->getBaseManager()
-                ->getOneByWithoutAuth('AppBundle:Item', array('id' => $id, 'locale' => NULL));
-
-        if (!$item) {
-            throw new HttpException(404, "Item not exist!");
-        }
-
-        return $this->handleView($this->view($item));
-    }
-
-    /**
-     * Add new item in database
-     * 
-     * Path: /items
-     * Method: POST
-     * 
-     * @param {obj} $request Request object
-     * @return {json} Status
-     * 
-     */
-    public function postItemAction(Request $request) {
-        $data = $request->request->all();
-        $item = new Item();
-
-        if (isset($data['page'])) {
-            $data['page'] = $this->getBaseManager()
-                    ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
-        }
-
-        if (isset($data['image'])) {
-            $data['image'] = $this->getBaseManager()
-                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
-        }
-
-        if (isset($data['gallery'])) {
-            $data['gallery'] = $this->getBaseManager()
-                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
-        }
-
-        $item->setVisible(1);
-
-        $result = $this->getBaseManager()
-                ->set($item, $data, $this->getLoggedUser());
-
-        $view = array(
-            'status' => 201,
-            'item' => $result,
-            'message' => 'New item added to database!'
-        );
+        $view = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Item', array('language' => NULL));
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Update specific item
-     * 
+     * Path: /pages/{slug}/items
+     * Method: GET
+     */
+    public function getPagesItemsAction($slug, Request $request) {
+        $param = $slug === '0' ? array_merge(array('page' => NULL, 'language' => NULL), $request->query->all()) :
+                array_merge(array('page' => $slug, 'language' => NULL), $request->query->all());
+
+        $view = $this->getBaseManager()->getByWithoutAuth('AppBundle:Item', $param);
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /languages/{slug}/items
+     * Method: GET
+     */
+    public function getLanguagesItemsAction($slug) {
+        $view = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Item', array('language' => $slug));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /languages/{lang}/pages/{slug}/items
+     * Method: GET
+     */
+    public function getLanguagesPagesItemsAction($lang, $slug) {
+        $view = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Item', array('page' => $slug, 'language' => $lang));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /items/{id}
+     * Method: GET
+     */
+    public function getItemAction($id) {
+        $view = $this->getBaseManager()
+                ->getOneByWithoutAuth('AppBundle:Item', array('id' => $id, 'language' => NULL));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /items
+     * Method: POST
+     */
+    public function postItemAction(Request $request) {
+        $item = new Item();
+        $item->setVisible(1);
+        $data = $request->request->all();
+
+        isset($data['page']) ? $data['page'] = $this->getBaseManager()
+                        ->get('AppBundle:Page', $data['page'], $this->getLoggedUser()) : false;
+
+        isset($data['language']) ? $data['language'] = $this->getBaseManager()
+                        ->get('AppBundle:Language', $data['language'], $this->getLoggedUser()) : false;
+
+        isset($data['image']) ? $data['image'] = $this->getBaseManager()
+                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : false;
+
+        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
+                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : false;
+
+        $view = $this->getBaseManager()
+                ->set('AppBundle:Item', $item, $data, $this->getLoggedUser());
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
      * Path: /items/{id}
      * Method: PUT
-     * 
-     * @param {int} $id Item identifier
-     * @param {obj} $request Request object
-     * @return {json} Status
-     * 
-     * @throws NotFoundHttpException when requested item doesn't exist
-     * @throws AccessDeniedException when user missmatch one defined in case
      */
     public function putItemAction($id, Request $request) {
         $data = $request->request->all();
 
-        if (isset($data['page'])) {
-            $data['page'] = $this->getBaseManager()
-                    ->get('AppBundle:Page', $data['page'], $this->getLoggedUser());
-        }
+        isset($data['page']) ? $data['page'] = $this->getBaseManager()
+                        ->get('AppBundle:Page', $data['page'], $this->getLoggedUser()) : false;
 
-        if (isset($data['image'])) {
-            $data['image'] = $this->getBaseManager()
-                    ->get('AppBundle:Image', $data['image'], $this->getLoggedUser());
-        } else {
-            $data['image'] = NULL;
-        }
+        isset($data['language']) ? $data['language'] = $this->getBaseManager()
+                        ->get('AppBundle:Language', $data['language'], $this->getLoggedUser()) : false;
 
-        if (isset($data['gallery'])) {
-            $data['gallery'] = $this->getBaseManager()
-                    ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser());
-        } else {
-            $data['gallery'] = NULL;
-        }
+        isset($data['image']) ? $data['image'] = $this->getBaseManager()
+                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : $data['image'] = NULL;
 
-        $result = $this->getBaseManager()
+        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
+                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : $data['gallery'] = NULL;
+
+        $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Item', $id, $this->getLoggedUser());
-
-        if ($result === 404) {
-            throw new HttpException(404, "Item with id " . $id . " not found!");
-        } else if ($result === 401) {
-            throw new AccessDeniedException();
-        }
-
-        $view = array(
-            'status' => 200,
-            'item' => $result,
-            'message' => 'Item updated!'
-        );
 
         return $this->handleView($this->view($view));
     }
 
     /**
-     * Delete specific item
-     * 
      * Path: /items/{id}
      * Method: DELETE
-     * 
-     * @param {int} $id Item identifier
-     * @return {json} Status
-     * 
-     * @throws NotFoundHttpException when requested item doesn't exist
-     * @throws AccessDeniedException when user missmatch one defined in calendar
      */
     public function deleteItemAction($id) {
-        $result = $this->getBaseManager()
+        $view = $this->getBaseManager()
                 ->delete('AppBundle:Item', $id, $this->getLoggedUser());
-
-        if ($result === 404) {
-            throw new HttpException(404, "Item with id " . $id . " not found!");
-        } else if ($result === 401) {
-            throw new AccessDeniedException();
-        }
-
-        $view = array(
-            'status' => 200,
-            'message' => 'Item successfully deleted!'
-        );
 
         return $this->handleView($this->view($view));
     }
 
     /**
      * Initialize BaseManager
-     * 
-     * @return AppBundle\Services\BaseManager
      */
     protected function getBaseManager() {
         return $this->get('app.base_manager');
@@ -258,8 +137,6 @@ class ItemController extends FOSRestController {
 
     /**
      * Get currently logged user
-     * 
-     * @return {obj} User
      */
     protected function getLoggedUser() {
         return $this->get('security.token_storage')->getToken()->getUser();

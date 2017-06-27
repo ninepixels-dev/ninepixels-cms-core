@@ -54,14 +54,12 @@ class Gallery {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -72,8 +70,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -84,8 +81,7 @@ class Gallery {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -96,8 +92,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -108,8 +103,7 @@ class Gallery {
      *
      * @return integer
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -120,8 +114,7 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -132,8 +125,8 @@ class Gallery {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
 }
