@@ -37,7 +37,7 @@ class RegisterController extends FOSRestController {
         $view = array(
             'status' => 201,
             'item' => $userManager->findUserByUsername($data['username']),
-            'message' => 'New user added to database!'
+            'message' => 'New user added to database'
         );
 
         return $this->handleView($this->view($view));

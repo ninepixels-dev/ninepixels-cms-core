@@ -12,7 +12,7 @@ register_user:
     type: rest
     resource: AppBundle\Controller\RegisterController
     methods: POST
-    
+
 confirm_user:
     path: /register/confirm/{token}
     defaults: { _controller: AppBundle:Register:confirm }

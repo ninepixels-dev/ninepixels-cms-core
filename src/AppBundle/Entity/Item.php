@@ -87,6 +87,12 @@ class Item {
     private $video;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $type;
+
+    /**
      * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
      * @Expose
      */
@@ -122,6 +128,345 @@ class Item {
             $this->{$str} = $value;
             return $this;
         }
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set identifier
+     *
+     * @param string $identifier
+     *
+     * @return Item
+     */
+    public function setIdentifier($identifier) {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * Get identifier
+     *
+     * @return string
+     */
+    public function getIdentifier() {
+        return $this->identifier;
+    }
+
+    /**
+     * Set structure
+     *
+     * @param string $structure
+     *
+     * @return Item
+     */
+    public function setStructure($structure) {
+        $this->structure = $structure;
+
+        return $this;
+    }
+
+    /**
+     * Get structure
+     *
+     * @return string
+     */
+    public function getStructure() {
+        return $this->structure;
+    }
+
+    /**
+     * Set classes
+     *
+     * @param string $classes
+     *
+     * @return Item
+     */
+    public function setClasses($classes) {
+        $this->classes = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Get classes
+     *
+     * @return string
+     */
+    public function getClasses() {
+        return $this->classes;
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     *
+     * @return Item
+     */
+    public function setLink($link) {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink() {
+        return $this->link;
+    }
+
+    /**
+     * Set video
+     *
+     * @param string $video
+     *
+     * @return Item
+     */
+    public function setVideo($video) {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get video
+     *
+     * @return string
+     */
+    public function getVideo() {
+        return $this->video;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Item
+     */
+    public function setType($type) {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Item
+     */
+    public function setPosition($position) {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition() {
+        return $this->position;
+    }
+
+    /**
+     * Set editable
+     *
+     * @param integer $editable
+     *
+     * @return Item
+     */
+    public function setEditable($editable) {
+        $this->editable = $editable;
+
+        return $this;
+    }
+
+    /**
+     * Get editable
+     *
+     * @return integer
+     */
+    public function getEditable() {
+        return $this->editable;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param integer $visible
+     *
+     * @return Item
+     */
+    public function setVisible($visible) {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return integer
+     */
+    public function getVisible() {
+        return $this->visible;
+    }
+
+    /**
+     * Set active
+     *
+     * @param integer $active
+     *
+     * @return Item
+     */
+    public function setActive($active) {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return integer
+     */
+    public function getActive() {
+        return $this->active;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Item
+     */
+    public function setUser(\AppBundle\Entity\User $user = null) {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
+     * Set page
+     *
+     * @param \AppBundle\Entity\Page $page
+     *
+     * @return Item
+     */
+    public function setPage(\AppBundle\Entity\Page $page = null) {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \AppBundle\Entity\Page
+     */
+    public function getPage() {
+        return $this->page;
+    }
+
+    /**
+     * Set language
+     *
+     * @param \AppBundle\Entity\Language $language
+     *
+     * @return Item
+     */
+    public function setLanguage(\AppBundle\Entity\Language $language = null) {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return \AppBundle\Entity\Language
+     */
+    public function getLanguage() {
+        return $this->language;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Item
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null) {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+    /**
+     * Set gallery
+     *
+     * @param \AppBundle\Entity\Gallery $gallery
+     *
+     * @return Item
+     */
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Get gallery
+     *
+     * @return \AppBundle\Entity\Gallery
+     */
+    public function getGallery() {
+        return $this->gallery;
     }
 
 }
