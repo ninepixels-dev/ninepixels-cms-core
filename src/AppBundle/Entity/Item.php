@@ -43,13 +43,13 @@ class Item {
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $identifier;
 
     /**
-     * @ORM\Column(type="string", length=10960, nullable=true)
+     * @ORM\Column(type="string", length=65353, nullable=true)
      * @Expose
      */
     private $structure;
@@ -72,12 +72,6 @@ class Item {
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $classes;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
     private $link;
 
     /**
@@ -85,6 +79,25 @@ class Item {
      * @Expose
      */
     private $video;
+
+    /**
+     * @ORM\Column(type="string", length=65353, nullable=true)
+     * @Expose
+     */
+    private $snippet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Component")
+     * @ORM\JoinColumn(name="component", referencedColumnName="id", nullable=true)
+     * @Expose
+     */
+    private $component;
+
+    /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $classes;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -99,19 +112,19 @@ class Item {
     private $position;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
+     * @ORM\Column(type="boolean", options={"default" : true}, nullable=true)
      * @Expose
      */
     private $editable;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1}, nullable=true)
+     * @ORM\Column(type="boolean", options={"default" : true}, nullable=true)
      * @Expose
      */
     private $visible;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -184,28 +197,6 @@ class Item {
     }
 
     /**
-     * Set classes
-     *
-     * @param string $classes
-     *
-     * @return Item
-     */
-    public function setClasses($classes) {
-        $this->classes = $classes;
-
-        return $this;
-    }
-
-    /**
-     * Get classes
-     *
-     * @return string
-     */
-    public function getClasses() {
-        return $this->classes;
-    }
-
-    /**
      * Set link
      *
      * @param string $link
@@ -247,6 +238,50 @@ class Item {
      */
     public function getVideo() {
         return $this->video;
+    }
+
+    /**
+     * Set snippet
+     *
+     * @param string $snippet
+     *
+     * @return Item
+     */
+    public function setSnippet($snippet) {
+        $this->snippet = $snippet;
+
+        return $this;
+    }
+
+    /**
+     * Get snippet
+     *
+     * @return string
+     */
+    public function getSnippet() {
+        return $this->snippet;
+    }
+
+    /**
+     * Set classes
+     *
+     * @param string $classes
+     *
+     * @return Item
+     */
+    public function setClasses($classes) {
+        $this->classes = $classes;
+
+        return $this;
+    }
+
+    /**
+     * Get classes
+     *
+     * @return string
+     */
+    public function getClasses() {
+        return $this->classes;
     }
 
     /**
@@ -296,7 +331,7 @@ class Item {
     /**
      * Set editable
      *
-     * @param integer $editable
+     * @param boolean $editable
      *
      * @return Item
      */
@@ -309,7 +344,7 @@ class Item {
     /**
      * Get editable
      *
-     * @return integer
+     * @return boolean
      */
     public function getEditable() {
         return $this->editable;
@@ -318,7 +353,7 @@ class Item {
     /**
      * Set visible
      *
-     * @param integer $visible
+     * @param boolean $visible
      *
      * @return Item
      */
@@ -331,7 +366,7 @@ class Item {
     /**
      * Get visible
      *
-     * @return integer
+     * @return boolean
      */
     public function getVisible() {
         return $this->visible;
@@ -340,7 +375,7 @@ class Item {
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Item
      */
@@ -353,7 +388,7 @@ class Item {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;
@@ -467,6 +502,28 @@ class Item {
      */
     public function getGallery() {
         return $this->gallery;
+    }
+
+    /**
+     * Set component
+     *
+     * @param \AppBundle\Entity\Component $component
+     *
+     * @return Item
+     */
+    public function setComponent(\AppBundle\Entity\Component $component = null) {
+        $this->component = $component;
+
+        return $this;
+    }
+
+    /**
+     * Get component
+     *
+     * @return \AppBundle\Entity\Component
+     */
+    public function getComponent() {
+        return $this->component;
     }
 
 }

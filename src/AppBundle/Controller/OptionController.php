@@ -39,7 +39,7 @@ class OptionController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Option', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Option', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -52,7 +52,7 @@ class OptionController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Option', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Option', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -61,9 +61,9 @@ class OptionController extends FOSRestController {
      * Path: /options/{id}
      * Method: DELETE
      */
-    public function deleteOptionAction($id) {
+    public function deleteOptionAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Option', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Option', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

@@ -41,10 +41,10 @@ class BlogController extends FOSRestController {
 
         $data = $request->request->all();
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->set($item, 'AppBundle:Blog', $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Blog', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -58,10 +58,10 @@ class BlogController extends FOSRestController {
         $data['edited'] = new \DateTime();
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : $data['image'] = NULL;
+                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : $data['image'] = NULL;
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Blog', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Blog', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -70,9 +70,9 @@ class BlogController extends FOSRestController {
      * Path: /blogs/{id}
      * Method: DELETE
      */
-    public function deleteBlogAction($id) {
+    public function deleteBlogAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Blog', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Blog', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

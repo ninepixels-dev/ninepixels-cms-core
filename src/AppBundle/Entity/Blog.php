@@ -35,7 +35,7 @@ class Blog {
     private $template;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $name;
@@ -47,7 +47,7 @@ class Blog {
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=10960, nullable=true)
+     * @ORM\Column(type="string", length=10960)
      * @Expose
      */
     private $content;
@@ -66,6 +66,13 @@ class Blog {
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Gallery")
+     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
+     * @Expose
+     */
+    private $gallery;
+
+    /**
      * @ORM\Column(type="string", length=256, nullable=true)
      * @Expose
      */
@@ -79,17 +86,18 @@ class Blog {
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Expose
      */
     private $edited;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $visible;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -206,6 +214,28 @@ class Blog {
     }
 
     /**
+     * Set tags
+     *
+     * @param string $tags
+     *
+     * @return Blog
+     */
+    public function setTags($tags) {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags() {
+        return $this->tags;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -274,7 +304,7 @@ class Blog {
     /**
      * Set visible
      *
-     * @param integer $visible
+     * @param boolean $visible
      *
      * @return Blog
      */
@@ -287,7 +317,7 @@ class Blog {
     /**
      * Get visible
      *
-     * @return integer
+     * @return boolean
      */
     public function getVisible() {
         return $this->visible;
@@ -296,7 +326,7 @@ class Blog {
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Blog
      */
@@ -309,7 +339,7 @@ class Blog {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;
@@ -360,25 +390,25 @@ class Blog {
     }
 
     /**
-     * Set tags
+     * Set gallery
      *
-     * @param string $tags
+     * @param \AppBundle\Entity\Gallery $gallery
      *
      * @return Blog
      */
-    public function setTags($tags) {
-        $this->tags = $tags;
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
+        $this->gallery = $gallery;
 
         return $this;
     }
 
     /**
-     * Get tags
+     * Get gallery
      *
-     * @return string
+     * @return \AppBundle\Entity\Gallery
      */
-    public function getTags() {
-        return $this->tags;
+    public function getGallery() {
+        return $this->gallery;
     }
 
 }

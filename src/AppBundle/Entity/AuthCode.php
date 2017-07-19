@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("oauth2_auth_codes")
  * @ORM\Entity
  */
-class AuthCode extends BaseAuthCode
-{
+class AuthCode extends BaseAuthCode {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -28,4 +28,5 @@ class AuthCode extends BaseAuthCode
      * @ORM\ManyToOne(targetEntity="User")
      */
     protected $user;
+
 }

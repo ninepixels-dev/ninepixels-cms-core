@@ -39,10 +39,10 @@ class LocaleController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Locale', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Locale', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -55,10 +55,10 @@ class LocaleController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Locale', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Locale', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -67,9 +67,9 @@ class LocaleController extends FOSRestController {
      * Path: /locales/{id}
      * Method: DELETE
      */
-    public function deleteLocaleAction($id) {
+    public function deleteLocaleAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Locale', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Locale', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

@@ -66,3 +66,7 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+php_value opcache.max_accelerated_files 20000
+php_value realpath_cache_size 4096k
+php_value realpath_cache_ttl 600

@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("oauth2_refresh_tokens")
  * @ORM\Entity
  */
-class RefreshToken extends BaseRefreshToken
-{
+class RefreshToken extends BaseRefreshToken {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -28,4 +28,5 @@ class RefreshToken extends BaseRefreshToken
      * @ORM\ManyToOne(targetEntity="User")
      */
     protected $user;
+
 }

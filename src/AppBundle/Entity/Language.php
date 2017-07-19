@@ -29,19 +29,19 @@ class Language {
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=true)
+     * @ORM\Column(type="string", length=12)
      * @Expose
      */
     private $code;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -122,7 +122,7 @@ class Language {
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Language
      */
@@ -136,7 +136,7 @@ class Language {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive()
     {

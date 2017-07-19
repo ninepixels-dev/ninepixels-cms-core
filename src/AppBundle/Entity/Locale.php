@@ -36,19 +36,19 @@ class Locale {
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=512)
      * @Expose
      */
     private $origin;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=true)
+     * @ORM\Column(type="string", length=512)
      * @Expose
      */
     private $translate;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -67,14 +67,12 @@ class Locale {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -85,8 +83,7 @@ class Locale {
      *
      * @return Locale
      */
-    public function setOrigin($origin)
-    {
+    public function setOrigin($origin) {
         $this->origin = $origin;
 
         return $this;
@@ -97,8 +94,7 @@ class Locale {
      *
      * @return string
      */
-    public function getOrigin()
-    {
+    public function getOrigin() {
         return $this->origin;
     }
 
@@ -109,8 +105,7 @@ class Locale {
      *
      * @return Locale
      */
-    public function setTranslate($translate)
-    {
+    public function setTranslate($translate) {
         $this->translate = $translate;
 
         return $this;
@@ -121,20 +116,18 @@ class Locale {
      *
      * @return string
      */
-    public function getTranslate()
-    {
+    public function getTranslate() {
         return $this->translate;
     }
 
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Locale
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -143,10 +136,9 @@ class Locale {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -157,8 +149,7 @@ class Locale {
      *
      * @return Locale
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -169,8 +160,7 @@ class Locale {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -181,8 +171,7 @@ class Locale {
      *
      * @return Locale
      */
-    public function setLanguage(\AppBundle\Entity\Language $language = null)
-    {
+    public function setLanguage(\AppBundle\Entity\Language $language = null) {
         $this->language = $language;
 
         return $this;
@@ -193,8 +182,8 @@ class Locale {
      *
      * @return \AppBundle\Entity\Language
      */
-    public function getLanguage()
-    {
+    public function getLanguage() {
         return $this->language;
     }
+
 }

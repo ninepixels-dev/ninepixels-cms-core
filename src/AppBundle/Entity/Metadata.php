@@ -43,7 +43,7 @@ class Metadata {
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $navigation;
@@ -61,7 +61,7 @@ class Metadata {
     private $description;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -80,14 +80,12 @@ class Metadata {
         }
     }
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -98,8 +96,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setNavigation($navigation)
-    {
+    public function setNavigation($navigation) {
         $this->navigation = $navigation;
 
         return $this;
@@ -110,8 +107,7 @@ class Metadata {
      *
      * @return string
      */
-    public function getNavigation()
-    {
+    public function getNavigation() {
         return $this->navigation;
     }
 
@@ -122,8 +118,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -134,8 +129,7 @@ class Metadata {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -146,8 +140,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -158,20 +151,18 @@ class Metadata {
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Metadata
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -180,10 +171,9 @@ class Metadata {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -194,8 +184,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -206,8 +195,7 @@ class Metadata {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -218,8 +206,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setPage(\AppBundle\Entity\Page $page = null)
-    {
+    public function setPage(\AppBundle\Entity\Page $page = null) {
         $this->page = $page;
 
         return $this;
@@ -230,8 +217,7 @@ class Metadata {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
@@ -242,8 +228,7 @@ class Metadata {
      *
      * @return Metadata
      */
-    public function setLanguage(\AppBundle\Entity\Language $language = null)
-    {
+    public function setLanguage(\AppBundle\Entity\Language $language = null) {
         $this->language = $language;
 
         return $this;
@@ -254,8 +239,8 @@ class Metadata {
      *
      * @return \AppBundle\Entity\Language
      */
-    public function getLanguage()
-    {
+    public function getLanguage() {
         return $this->language;
     }
+
 }

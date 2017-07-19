@@ -36,7 +36,7 @@ class Page {
     private $parent;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $name;
@@ -62,31 +62,31 @@ class Page {
     private $gallery;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $showHeader;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $showNavigation;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $showFooter;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $showInNavigation;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $visible;
@@ -98,7 +98,7 @@ class Page {
     private $position;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
      * @Expose
      */
     private $active;
@@ -173,7 +173,7 @@ class Page {
     /**
      * Set showHeader
      *
-     * @param integer $showHeader
+     * @param boolean $showHeader
      *
      * @return Page
      */
@@ -186,7 +186,7 @@ class Page {
     /**
      * Get showHeader
      *
-     * @return integer
+     * @return boolean
      */
     public function getShowHeader() {
         return $this->showHeader;
@@ -195,7 +195,7 @@ class Page {
     /**
      * Set showNavigation
      *
-     * @param integer $showNavigation
+     * @param boolean $showNavigation
      *
      * @return Page
      */
@@ -208,7 +208,7 @@ class Page {
     /**
      * Get showNavigation
      *
-     * @return integer
+     * @return boolean
      */
     public function getShowNavigation() {
         return $this->showNavigation;
@@ -217,7 +217,7 @@ class Page {
     /**
      * Set showFooter
      *
-     * @param integer $showFooter
+     * @param boolean $showFooter
      *
      * @return Page
      */
@@ -230,7 +230,7 @@ class Page {
     /**
      * Get showFooter
      *
-     * @return integer
+     * @return boolean
      */
     public function getShowFooter() {
         return $this->showFooter;
@@ -239,7 +239,7 @@ class Page {
     /**
      * Set showInNavigation
      *
-     * @param integer $showInNavigation
+     * @param boolean $showInNavigation
      *
      * @return Page
      */
@@ -252,7 +252,7 @@ class Page {
     /**
      * Get showInNavigation
      *
-     * @return integer
+     * @return boolean
      */
     public function getShowInNavigation() {
         return $this->showInNavigation;
@@ -261,7 +261,7 @@ class Page {
     /**
      * Set visible
      *
-     * @param integer $visible
+     * @param boolean $visible
      *
      * @return Page
      */
@@ -274,7 +274,7 @@ class Page {
     /**
      * Get visible
      *
-     * @return integer
+     * @return boolean
      */
     public function getVisible() {
         return $this->visible;
@@ -305,7 +305,7 @@ class Page {
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Page
      */
@@ -318,7 +318,7 @@ class Page {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;

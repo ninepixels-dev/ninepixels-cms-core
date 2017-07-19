@@ -1,28 +1,22 @@
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
-    
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
-
-register_user:
-    type: rest
-    resource: AppBundle\Controller\RegisterController
-    methods: POST
-
-confirm_user:
-    path: /register/confirm/{token}
-    defaults: { _controller: AppBundle:Register:confirm }
-    methods: GET
+    
+app:
+    type: annotation
+    resource: 'AppBundle\Controller\DefaultController'
 
 mailer:
     type: rest
     resource: AppBundle\Controller\MailerController
     methods: POST
     prefix: mailer
+    
+assets:
+    type: rest
+    resource: AppBundle\Controller\AssetController
 
 users:
     type: rest
@@ -59,10 +53,6 @@ options:
 components:
     type: rest
     resource: AppBundle\Controller\ComponentController
-
-products:
-    type: rest
-    resource: AppBundle\Controller\ProductController
 
 languages:
     type: rest

@@ -29,25 +29,25 @@ class Option {
     private $user;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     * @Expose
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=512)
+     * @Expose
+     */
+    private $value;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
     private $group;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * @Expose
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=512, nullable=true)
-     * @Expose
-     */
-    private $value;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -107,9 +107,31 @@ class Option {
     }
 
     /**
+     * Set group
+     *
+     * @param string $group
+     *
+     * @return Option
+     */
+    public function setGroup($group) {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return string
+     */
+    public function getGroup() {
+        return $this->group;
+    }
+
+    /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Option
      */
@@ -122,7 +144,7 @@ class Option {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;
@@ -148,28 +170,6 @@ class Option {
      */
     public function getUser() {
         return $this->user;
-    }
-
-    /**
-     * Set group
-     *
-     * @param string $group
-     *
-     * @return Option
-     */
-    public function setGroup($group) {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return string
-     */
-    public function getGroup() {
-        return $this->group;
     }
 
 }

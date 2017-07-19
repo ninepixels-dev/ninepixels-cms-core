@@ -12,9 +12,10 @@ class ItemController extends FOSRestController {
      * Path: /items
      * Method: GET
      */
-    public function getItemsAction() {
+    public function getItemsAction(Request $request) {
+        $query = array_merge(array('language' => null), (array) $request->query->all());
         $view = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Item', array('language' => NULL));
+                ->getByWithoutAuth('AppBundle:Item', $query);
 
         return $this->handleView($this->view($view));
     }
@@ -58,7 +59,7 @@ class ItemController extends FOSRestController {
      * Path: /items/{id}
      * Method: GET
      */
-    public function getItemAction($id) {
+    public function getItemAction($id, Request $request) {
         $view = $this->getBaseManager()
                 ->getOneByWithoutAuth('AppBundle:Item', array('id' => $id, 'language' => NULL));
 
@@ -75,19 +76,22 @@ class ItemController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['page'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Page', isset($data['page']['id']) ? $data['page']['id'] : $data['page'], $this->getLoggedUser()) : false;
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->get('AppBundle:Language', $data['language'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Language', $data['language']['id'], $this->getLoggedUser()) : false;
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : false;
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : false;
+
+        isset($data['component']) ? $data['component'] = $this->getBaseManager()
+                        ->get('AppBundle:Component', $data['component']['id'], $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Item', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Item', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -100,19 +104,22 @@ class ItemController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['page'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Page', isset($data['page']['id']) ? $data['page']['id'] : $data['page'], $this->getLoggedUser()) : false;
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->get('AppBundle:Language', $data['language'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Language', $data['language']['id'], $this->getLoggedUser()) : false;
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image'], $this->getLoggedUser()) : $data['image'] = NULL;
+                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : false;
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : $data['gallery'] = NULL;
+                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : false;
+        
+        isset($data['component']) ? $data['component'] = $this->getBaseManager()
+                        ->get('AppBundle:Component', $data['component']['id'], $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Item', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Item', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -123,7 +130,7 @@ class ItemController extends FOSRestController {
      */
     public function deleteItemAction($id) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Item', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Item', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("oauth2_clients")
  * @ORM\Entity
  */
-class Client extends BaseClient
-{
+class Client extends BaseClient {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -18,8 +18,8 @@ class Client extends BaseClient
      */
     protected $id;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
+
 }

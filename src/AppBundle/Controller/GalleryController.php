@@ -31,6 +31,27 @@ class GalleryController extends FOSRestController {
     }
 
     /**
+     * Path: /gallery/images
+     * Method: GET
+     */
+    public function getGalleryImagesAction() {
+        $view = array();
+        $galleries = $this->getBaseManager()
+                ->getAllWithoutAuth('AppBundle:Gallery');
+
+        foreach ($galleries as $gallery) {
+            array_push($view, array(
+                'id' => $gallery->getId(),
+                'name' => $gallery->getName(),
+                'images' => (array) $this->getBaseManager()
+                        ->getByWithoutAuth('AppBundle:Image', array('gallery' => $gallery), true)
+            ));
+        }
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
      * Path: /galleries
      * Method: POST
      */
@@ -39,7 +60,7 @@ class GalleryController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Gallery', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Gallery', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -52,7 +73,7 @@ class GalleryController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Gallery', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Gallery', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -61,9 +82,9 @@ class GalleryController extends FOSRestController {
      * Path: /galleries/{id}
      * Method: DELETE
      */
-    public function deleteGalleryAction($id) {
+    public function deleteGalleryAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Gallery', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Gallery', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

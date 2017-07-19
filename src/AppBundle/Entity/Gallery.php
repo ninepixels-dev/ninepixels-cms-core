@@ -35,7 +35,7 @@ class Gallery {
     private $name;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -88,7 +88,7 @@ class Gallery {
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Gallery
      */
@@ -101,7 +101,7 @@ class Gallery {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;

@@ -32,13 +32,19 @@ class Image {
     private $user;
 
     /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     * @Expose
+     */
+    private $type;
+
+    /**
      * @Vich\UploadableField(mapping="file", fileNameProperty="url")
      * @Expose
      */
     private $file;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=true)
+     * @ORM\Column(type="string", length=128)
      * @Expose
      */
     private $url;
@@ -54,12 +60,6 @@ class Image {
      * @Expose
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="string", length=256, nullable=true)
-     * @Expose
-     */
-    private $description;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
@@ -78,10 +78,10 @@ class Image {
      * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
      * @Expose
      */
-    private $visible;
+    private $position;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -126,6 +126,28 @@ class Image {
      */
     public function getFile() {
         return $this->file;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Image
+     */
+    public function setType($type) {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType() {
+        return $this->type;
     }
 
     /**
@@ -195,28 +217,6 @@ class Image {
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Image
-     */
-    public function setDescription($description) {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription() {
-        return $this->description;
-    }
-
-    /**
      * Set size
      *
      * @param string $size
@@ -239,31 +239,31 @@ class Image {
     }
 
     /**
-     * Set visible
+     * Set position
      *
-     * @param integer $visible
+     * @param integer $position
      *
      * @return Image
      */
-    public function setVisible($visible) {
-        $this->visible = $visible;
+    public function setPosition($position) {
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get visible
+     * Get position
      *
      * @return integer
      */
-    public function getVisible() {
-        return $this->visible;
+    public function getPosition() {
+        return $this->position;
     }
 
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Image
      */
@@ -276,7 +276,7 @@ class Image {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;

@@ -39,7 +39,7 @@ class LanguageController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Language', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Language', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -52,7 +52,7 @@ class LanguageController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Language', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Language', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -61,9 +61,9 @@ class LanguageController extends FOSRestController {
      * Path: /languages/{id}
      * Method: DELETE
      */
-    public function deleteLanguageAction($id) {
+    public function deleteLanguageAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Language', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Language', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

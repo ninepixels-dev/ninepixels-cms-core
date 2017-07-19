@@ -29,16 +29,22 @@ class Log {
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $ip;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     * @Expose
+     */
+    private $method;
 
     /**
      * @ORM\Column(type="datetime")
@@ -111,6 +117,28 @@ class Log {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set method
+     *
+     * @param string $method
+     *
+     * @return Log
+     */
+    public function setMethod($method) {
+        $this->method = $method;
+
+        return $this;
+    }
+
+    /**
+     * Get method
+     *
+     * @return string
+     */
+    public function getMethod() {
+        return $this->method;
     }
 
     /**

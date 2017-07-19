@@ -39,7 +39,7 @@ class ComponentController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Component', $item, $data, $this->getLoggedUser());
+                ->set($item, 'AppBundle:Component', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -52,7 +52,7 @@ class ComponentController extends FOSRestController {
         $data = $request->request->all();
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Component', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Component', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -61,9 +61,9 @@ class ComponentController extends FOSRestController {
      * Path: /components/{id}
      * Method: DELETE
      */
-    public function deleteComponentAction($id) {
+    public function deleteComponentAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Component', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Component', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

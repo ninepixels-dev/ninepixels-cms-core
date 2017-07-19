@@ -20,6 +20,9 @@ class MailerController extends FOSRestController {
 
         $this->get('mailer')->send($message);
 
+        $this->getBaseManager()
+                ->logAction('Message sent to ' . $data['to'], $this->getLoggedUser(), $request->getClientIp(), 'MAIL');
+
         $view = array(
             'status' => 200,
             'message' => 'Message sent'
@@ -48,12 +51,29 @@ class MailerController extends FOSRestController {
 
         $this->get('mailer')->send($confirmation);
 
+        $this->getBaseManager()
+                ->logAction('New booking from ' . $data['from'], $this->getLoggedUser(), $request->getClientIp(), 'BOOKING MAIL');
+
         $view = array(
             'status' => 200,
             'message' => 'Booking confirmation send'
         );
 
         return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Initialize BaseManager
+     */
+    protected function getBaseManager() {
+        return $this->get('app.base_manager');
+    }
+
+    /**
+     * Get currently logged user
+     */
+    protected function getLoggedUser() {
+        return $this->get('security.token_storage')->getToken()->getUser();
     }
 
 }

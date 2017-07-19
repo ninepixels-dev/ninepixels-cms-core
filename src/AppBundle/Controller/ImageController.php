@@ -35,7 +35,7 @@ class ImageController extends FOSRestController {
      * Method: GET
      */
     public function getGalleriesImagesAction($slug) {
-        $param = $slug === '0' ? array('gallery' => NULL) : array('gallery' => $slug);
+        $param = array('gallery' => $slug === '0' ? NULL : $slug);
 
         $view = $this->getBaseManager()
                 ->getByWithoutAuth('AppBundle:Image', $param);
@@ -60,7 +60,7 @@ class ImageController extends FOSRestController {
         }
 
         $view = $this->getBaseManager()
-                ->set('AppBundle:Gallery', $image, $data, $this->getLoggedUser());
+                ->set($image, 'AppBundle:Image', $data, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -73,10 +73,10 @@ class ImageController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : false;
+                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : false;
 
         $view = $this->getBaseManager()
-                ->update($data, 'AppBundle:Image', $id, $this->getLoggedUser());
+                ->update($data, 'AppBundle:Image', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }
@@ -85,9 +85,9 @@ class ImageController extends FOSRestController {
      * Path: /images/{id}
      * Method: DELETE
      */
-    public function deleteImageAction($id) {
+    public function deleteImageAction($id, Request $request) {
         $view = $this->getBaseManager()
-                ->delete('AppBundle:Image', $id, $this->getLoggedUser());
+                ->delete('AppBundle:Image', $id, $this->getLoggedUser(), $request->getClientIp());
 
         return $this->handleView($this->view($view));
     }

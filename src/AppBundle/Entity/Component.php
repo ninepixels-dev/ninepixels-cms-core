@@ -29,19 +29,25 @@ class Component {
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=256, nullable=true)
+     * @ORM\Column(type="string", length=65353)
      * @Expose
      */
-    private $settings;
+    private $value;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 1})
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * @Expose
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -92,31 +98,40 @@ class Component {
     }
 
     /**
-     * Set settings
+     * Get value
      *
-     * @param string $settings
+     * @return string
+     */
+    public function getValue() {
+        return $this->value;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
      *
      * @return Component
      */
-    public function setSettings($settings) {
-        $this->settings = $settings;
+    public function setType($type) {
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get settings
+     * Get type
      *
      * @return string
      */
-    public function getSettings() {
-        return $this->settings;
+    public function getType() {
+        return $this->type;
     }
 
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
      *
      * @return Component
      */
@@ -129,7 +144,7 @@ class Component {
     /**
      * Get active
      *
-     * @return integer
+     * @return boolean
      */
     public function getActive() {
         return $this->active;

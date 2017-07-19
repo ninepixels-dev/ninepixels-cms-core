@@ -45,10 +45,29 @@ class BaseManager {
     public function getAllWithoutAuth($repo) {
         $obj = $this->em
                 ->getRepository($repo)
-                ->findBy(array('active' => 1));
+                ->findBy(array('active' => true));
 
         if (empty($obj)) {
             throw new HttpException(204, "There is no items for requested data");
+        }
+
+        return $obj;
+    }
+
+    /**
+     * Get all data from database without authorization for asset purpose
+     * 
+     * @param $repo Name of repo where to look
+     * @retun {Object} Data
+     * 
+     */
+    public function getAssetWithoutAuth($repo) {
+        $obj = $this->em
+                ->getRepository($repo)
+                ->findBy(array('active' => true));
+
+        if (empty($obj)) {
+            return array();
         }
 
         return $obj;
@@ -85,13 +104,13 @@ class BaseManager {
      * @retun {Object} Data
      * 
      */
-    public function getByWithoutAuth($repo, $param) {
-        $param['active'] = '1';
+    public function getByWithoutAuth($repo, $param, $empty = false) {
+        $param['active'] = true;
         $obj = $this->em
                 ->getRepository($repo)
                 ->findBy($param);
 
-        if (empty($obj)) {
+        if (empty($obj) && !$empty) {
             throw new HttpException(204, "There is no items for requested data");
         }
 
@@ -150,17 +169,13 @@ class BaseManager {
      * @retun {Object} Data
      * 
      */
-    public function get($repo, $id, $user) {
+    public function get($repo, $id) {
         $obj = $this->em
                 ->getRepository($repo)
                 ->find($id);
 
         if (empty($obj)) {
             throw new HttpException(204, "There is no items for requested data");
-        }
-
-        if ($user->getId() !== $obj->getUser()->getId()) {
-            throw new AccessDeniedException();
         }
 
         return $obj;
@@ -196,9 +211,9 @@ class BaseManager {
      * @retun {Object} Newly created object
      * 
      */
-    public function set($obj, $repo, $data, $user) {
+    public function set($obj, $repo, $data, $user, $ip) {
         $obj->setUser($user);
-        $obj->setActive(1);
+        $obj->setActive(true);
 
         foreach ($data as $key => $value) {
             $obj->setValue($key, $value);
@@ -207,7 +222,7 @@ class BaseManager {
         $this->em->persist($obj);
         $this->em->flush();
 
-        $this->logAction('Item ' . $obj->getId() . ' created in ' . $repo, $user);
+        $this->logAction('Item ' . $obj->getId() . ' created in ' . $repo, $user, $ip, 'POST');
 
         return array(
             'status' => 201,
@@ -226,7 +241,7 @@ class BaseManager {
      * @retun {Object} Updated object
      * 
      */
-    public function update($data, $repo, $id, $user) {
+    public function update($data, $repo, $id, $user, $ip) {
         $obj = $this->em->getRepository($repo)->find($id);
 
         if (empty($obj)) {
@@ -243,7 +258,7 @@ class BaseManager {
 
         $this->em->flush();
 
-        $this->logAction('Item ' . $obj->getId() . ' updated in ' . $repo, $user);
+        $this->logAction('Item ' . $obj->getId() . ' updated in ' . $repo, $user, $ip, 'PUT');
 
         return array(
             'status' => 200,
@@ -260,9 +275,9 @@ class BaseManager {
      * @param $user Currently logged user
      * 
      */
-    public function delete($repo, $id, $user) {
+    public function delete($repo, $id, $user, $ip) {
         $obj = $this->em->getRepository($repo)->find($id);
-        $obj->setActive(0);
+        $obj->setActive(false);
 
         if (empty($obj)) {
             throw new HttpException(204, "There is no items for requested data");
@@ -274,7 +289,7 @@ class BaseManager {
 
         $this->em->flush();
 
-        $this->logAction('Item ' . $obj->getId() . ' deleted in ' . $repo, $user);
+        $this->logAction('Item ' . $obj->getId() . ' deleted in ' . $repo, $user, $ip, 'DELETE');
 
         return array(
             'status' => 200,
@@ -291,21 +306,17 @@ class BaseManager {
      * @param $user Currently logged user
      * 
      */
-    public function hardDelete($repo, $id, $user) {
+    public function hardDelete($repo, $id, $user, $ip) {
         $obj = $this->em->getRepository($repo)->find($id);
 
         if (empty($obj)) {
             throw new HttpException(204, "There is no items for requested data");
         }
 
-        if ($user->getId() !== $obj->getUser()->getId()) {
-            throw new AccessDeniedException();
-        }
-
         $this->em->remove($obj);
         $this->em->flush();
 
-        $this->logAction('Item ' . $obj->getId() . ' hard deleted in ' . $repo, $user);
+        $this->logAction('Item ' . $obj->getId() . ' hard deleted in ' . $repo, $user, $ip, 'HARD DELETE');
 
         return array(
             'status' => 200,
@@ -319,14 +330,13 @@ class BaseManager {
      * @param $message Log message
      * @param $user Currently logged user
      */
-    public function logAction($message, $user) {
-        $request = Request::createFromGlobals();
-
+    public function logAction($message, $user, $ip, $method) {
         $log = new Log();
         $log->setUser($user);
-        $log->setIp($request->getClientIp());
+        $log->setIp($ip);
         $log->setDescription($message);
         $log->setDate(new \DateTime());
+        $log->setMethod($method);
 
         $this->em->persist($log);
         $this->em->flush();
