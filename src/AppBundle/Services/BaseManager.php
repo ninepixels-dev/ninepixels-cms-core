@@ -235,7 +235,7 @@ class BaseManager {
      * Updating data in database
      * 
      * @param $data Data to be updated
-     * @param $repo Name of repo whete to look
+     * @param $repo Name of repo where to look
      * @param $id Identifier    
      * @param $user Currently logged user
      * @retun {Object} Updated object

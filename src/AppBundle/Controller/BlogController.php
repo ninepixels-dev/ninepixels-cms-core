@@ -31,7 +31,7 @@ class BlogController extends FOSRestController {
     }
 
     /**
-     * Path: /blogs‚
+     * Path: /blogs
      * Method: POST
      * 
      */
@@ -56,6 +56,8 @@ class BlogController extends FOSRestController {
     public function putBlogAction($id, Request $request) {
         $data = $request->request->all();
         $data['edited'] = new \DateTime();
+
+        unset($data['created']);
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
                         ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : $data['image'] = NULL;
