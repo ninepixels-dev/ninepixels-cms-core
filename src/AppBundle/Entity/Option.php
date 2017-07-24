@@ -35,7 +35,7 @@ class Option {
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=512)
+     * @ORM\Column(type="string", length=5120)
      * @Expose
      */
     private $value;
@@ -44,7 +44,7 @@ class Option {
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
-    private $group;
+    private $type;
 
     /**
      * @ORM\Column(type="boolean", options={"default" : true})
@@ -107,25 +107,25 @@ class Option {
     }
 
     /**
-     * Set group
+     * Set type
      *
-     * @param string $group
+     * @param string $type
      *
      * @return Option
      */
-    public function setGroup($group) {
-        $this->group = $group;
+    public function setType($type) {
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get group
+     * Get type
      *
      * @return string
      */
-    public function getGroup() {
-        return $this->group;
+    public function getType() {
+        return $this->type;
     }
 
     /**

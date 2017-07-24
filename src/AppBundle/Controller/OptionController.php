@@ -31,6 +31,17 @@ class OptionController extends FOSRestController {
     }
 
     /**
+     * Path: /options/{group}
+     * Method: GET
+     */
+    public function getOptionGroupAction($group) {
+        $view = $this->getBaseManager()
+                ->getByWithoutAuth('AppBundle:Option', array('group' => $group));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
      * Path: /options
      * Method: POST
      */
