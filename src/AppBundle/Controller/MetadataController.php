@@ -14,7 +14,7 @@ class MetadataController extends FOSRestController {
      */
     public function getMetadatasAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Metadata');
+                ->getAll('AppBundle:Metadata');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class MetadataController extends FOSRestController {
      */
     public function getMetadataAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Metadata', $id);
+                ->get('AppBundle:Metadata', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -36,7 +36,7 @@ class MetadataController extends FOSRestController {
      */
     public function getPagesMetadatasAction($page) {
         $view = $this->getBaseManager()
-                ->getOneByWithoutAuth('AppBundle:Metadata', array('page' => $page, 'language' => NULL));
+                ->getOneBy('AppBundle:Metadata', array('page' => $page, 'language' => NULL));
 
         return $this->handleView($this->view($view));
     }
@@ -47,7 +47,7 @@ class MetadataController extends FOSRestController {
      */
     public function getLanguagesPagesMetadatasAction($lang, $page) {
         $view = $this->getBaseManager()
-                ->getOneByWithoutAuth('AppBundle:Metadata', array('page' => $page, 'language' => $lang));
+                ->getOneBy('AppBundle:Metadata', array('page' => $page, 'language' => $lang));
 
         return $this->handleView($this->view($view));
     }
@@ -61,10 +61,10 @@ class MetadataController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code'])) : false;
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['page']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->set($item, 'AppBundle:Metadata', $data, $this->getLoggedUser(), $request->getClientIp());
@@ -80,10 +80,10 @@ class MetadataController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code'])) : false;
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['page']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Metadata', $id, $this->getLoggedUser(), $request->getClientIp());

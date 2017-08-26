@@ -12,9 +12,9 @@ class BlogController extends FOSRestController {
      * Path: /blogs
      * Method: GET
      */
-    public function getBlogsAction() {
+    public function getBlogsAction(Request $request) {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Blog');
+                ->getBy('AppBundle:Blog', $request->query->all(), false, array('created' => 'DESC'));
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,20 @@ class BlogController extends FOSRestController {
      */
     public function getBlogAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Blog', $id);
+                ->get('AppBundle:Blog', $id);
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /pages/{id}/blogs
+     * Method: GET
+     */
+    public function getPagesBlogsAction($page, Request $request) {
+        $query = array_merge(array('page' => $page), (array) $request->query->all());
+
+        $view = $this->getBaseManager()
+                ->getBy('AppBundle:Blog', $query, false, array('created' => 'DESC'));
 
         return $this->handleView($this->view($view));
     }
@@ -40,8 +53,15 @@ class BlogController extends FOSRestController {
         $item->setCreated(new \DateTime());
 
         $data = $request->request->all();
+
+        isset($data['page']) ? $data['page'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
+
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Image', $data['image']['id']) : false;
+
+        // Set Author
+        $data['author'] = $this->getLoggedUser()->getName();
 
         $view = $this->getBaseManager()
                 ->set($item, 'AppBundle:Blog', $data, $this->getLoggedUser(), $request->getClientIp());
@@ -59,8 +79,11 @@ class BlogController extends FOSRestController {
 
         unset($data['created']);
 
+        isset($data['page']) ? $data['page'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
+
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : $data['image'] = NULL;
+                        ->getOneBy('AppBundle:Image', $data['image']['id']) : $data['image'] = NULL;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Blog', $id, $this->getLoggedUser(), $request->getClientIp());

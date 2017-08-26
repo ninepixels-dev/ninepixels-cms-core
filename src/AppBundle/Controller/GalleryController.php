@@ -14,7 +14,7 @@ class GalleryController extends FOSRestController {
      */
     public function getGalleriesAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Gallery');
+                ->getAll('AppBundle:Gallery');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class GalleryController extends FOSRestController {
      */
     public function getGalleryAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Gallery', $id);
+                ->get('AppBundle:Gallery', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -37,14 +37,14 @@ class GalleryController extends FOSRestController {
     public function getGalleryImagesAction() {
         $view = array();
         $galleries = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Gallery');
+                ->getAll('AppBundle:Gallery');
 
         foreach ($galleries as $gallery) {
             array_push($view, array(
                 'id' => $gallery->getId(),
                 'name' => $gallery->getName(),
                 'images' => (array) $this->getBaseManager()
-                        ->getByWithoutAuth('AppBundle:Image', array('gallery' => $gallery), true)
+                        ->getBy('AppBundle:Image', array('gallery' => $gallery), true)
             ));
         }
 

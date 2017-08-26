@@ -13,12 +13,12 @@ class AssetController extends FOSRestController {
      */
     public function getAssetsAction() {
         $view = array(
-            'pages' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Page') ?: array(),
-            'blogs' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Blog') ?: array(),
-            'languages' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Language') ?: array(),
-            'locales' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Locale') ?: array(),
-            'options' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Option') ?: array(),
-            'metadatas' => $this->getBaseManager()->getAssetWithoutAuth('AppBundle:Metadata') ?: array()
+            'pages' => $this->getBaseManager()->getAll('AppBundle:Page', true) ?: array(),
+            'blogs' => $this->getBaseManager()->getAll('AppBundle:Blog', true) ?: array(),
+            'languages' => $this->getBaseManager()->getAll('AppBundle:Language', true) ?: array(),
+            'locales' => $this->getBaseManager()->getAll('AppBundle:Locale', true) ?: array(),
+            'options' => $this->getBaseManager()->getAll('AppBundle:Option', true) ?: array(),
+            'metadatas' => $this->getBaseManager()->getAll('AppBundle:Metadata', true) ?: array()
         );
 
         return $this->handleView($this->view($view));

@@ -12,9 +12,9 @@ class ImageController extends FOSRestController {
      * Path: /images
      * Method: GET
      */
-    public function getImagesAction() {
+    public function getImagesAction() {    
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Image');
+                ->getAll('AppBundle:Image');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class ImageController extends FOSRestController {
      */
     public function getImageAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Image', $id);
+                ->get('AppBundle:Image', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -38,7 +38,7 @@ class ImageController extends FOSRestController {
         $param = array('gallery' => $slug === '0' ? NULL : $slug);
 
         $view = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Image', $param);
+                ->getBy('AppBundle:Image', $param);
 
         return $this->handleView($this->view($view));
     }
@@ -53,7 +53,7 @@ class ImageController extends FOSRestController {
         $file = $request->files->all();
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']) : false;
 
         if (!empty($file)) {
             $data = array_merge($data, $file);
@@ -73,7 +73,7 @@ class ImageController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Image', $id, $this->getLoggedUser(), $request->getClientIp());

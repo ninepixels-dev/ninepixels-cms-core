@@ -35,7 +35,7 @@ class Log {
     private $ip;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=1024)
      * @Expose
      */
     private $description;

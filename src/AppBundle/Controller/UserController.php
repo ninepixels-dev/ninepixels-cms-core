@@ -35,6 +35,7 @@ class UserController extends FOSRestController {
 
         $user = $userManager->createUser();
         $user->setUsername($data['username']);
+        $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setPlainPassword($data['password']);
         $user->setEnabled($data['enabled']);
@@ -62,6 +63,7 @@ class UserController extends FOSRestController {
         $user = $userManager->findUserBy(array('id' => $id));
 
         $user->setUsername($data['username']);
+        $user->setName($data['name']);
         $user->setEmail($data['email']);
 
         if (isset($data['password'])) {

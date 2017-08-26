@@ -117,6 +117,7 @@ liip_imagine:
                 data_root: %kernel.root_dir%/../web/uploads
 
     filter_sets:
+        cache: ~
         thumbs:
             quality: 80
             filters:

@@ -14,7 +14,7 @@ class OptionController extends FOSRestController {
      */
     public function getOptionsAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Option');
+                ->getAll('AppBundle:Option');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class OptionController extends FOSRestController {
      */
     public function getOptionAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Option', $id);
+                ->get('AppBundle:Option', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -36,7 +36,7 @@ class OptionController extends FOSRestController {
      */
     public function getOptionGroupAction($group) {
         $view = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Option', array('group' => $group));
+                ->getBy('AppBundle:Option', array('group' => $group));
 
         return $this->handleView($this->view($view));
     }

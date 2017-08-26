@@ -14,7 +14,7 @@ class LanguageController extends FOSRestController {
      */
     public function getLanguagesAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Language');
+                ->getAll('AppBundle:Language');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class LanguageController extends FOSRestController {
      */
     public function getLanguageAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Language', $id);
+                ->get('AppBundle:Language', $id);
 
         return $this->handleView($this->view($view));
     }

@@ -11,10 +11,6 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
         oauth_token:
             pattern: ^/oauth/v2/token
             security: false

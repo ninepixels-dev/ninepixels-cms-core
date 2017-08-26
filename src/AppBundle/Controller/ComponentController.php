@@ -14,7 +14,7 @@ class ComponentController extends FOSRestController {
      */
     public function getComponentsAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Component');
+                ->getAll('AppBundle:Component');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class ComponentController extends FOSRestController {
      */
     public function getComponentAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Component', $id);
+                ->get('AppBundle:Component', $id);
 
         return $this->handleView($this->view($view));
     }

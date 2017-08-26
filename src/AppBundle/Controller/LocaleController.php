@@ -14,7 +14,7 @@ class LocaleController extends FOSRestController {
      */
     public function getLocalesAction() {
         $view = $this->getBaseManager()
-                ->getAllWithoutAuth('AppBundle:Locale');
+                ->getAll('AppBundle:Locale');
 
         return $this->handleView($this->view($view));
     }
@@ -25,7 +25,7 @@ class LocaleController extends FOSRestController {
      */
     public function getLocaleAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Locale', $id);
+                ->get('AppBundle:Locale', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -39,7 +39,7 @@ class LocaleController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code'])) : false;
 
         $view = $this->getBaseManager()
                 ->set($item, 'AppBundle:Locale', $data, $this->getLoggedUser(), $request->getClientIp());
@@ -55,7 +55,7 @@ class LocaleController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['language']) ? $data['language'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code']), $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Language', array('code' => $data['language']['code'])) : false;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Locale', $id, $this->getLoggedUser(), $request->getClientIp());

@@ -16,58 +16,19 @@ class BaseManager {
     }
 
     /**
-     * Get all data from database
-     * 
-     * @param $repo Name of repo where to look
-     * @param $user Currently logged user
-     * @retun {Object} Data
-     * 
-     */
-    public function getAll($repo, $user) {
-        $obj = $this->em
-                ->getRepository($repo)
-                ->findByUser($user);
-
-        if (empty($obj)) {
-            throw new HttpException(204, "There is no items for requested data");
-        }
-
-        return $obj;
-    }
-
-    /**
      * Get all data from database without authorization
      * 
      * @param $repo Name of repo where to look
      * @retun {Object} Data
      * 
      */
-    public function getAllWithoutAuth($repo) {
+    public function getAll($repo, $empty = false, $sort = null, $limit = null, $offset = null) {
         $obj = $this->em
                 ->getRepository($repo)
-                ->findBy(array('active' => true));
+                ->findBy(array('active' => true), $sort, $limit, $offset);
 
-        if (empty($obj)) {
+        if (empty($obj) && !$empty) {
             throw new HttpException(204, "There is no items for requested data");
-        }
-
-        return $obj;
-    }
-
-    /**
-     * Get all data from database without authorization for asset purpose
-     * 
-     * @param $repo Name of repo where to look
-     * @retun {Object} Data
-     * 
-     */
-    public function getAssetWithoutAuth($repo) {
-        $obj = $this->em
-                ->getRepository($repo)
-                ->findBy(array('active' => true));
-
-        if (empty($obj)) {
-            return array();
         }
 
         return $obj;
@@ -78,37 +39,21 @@ class BaseManager {
      * 
      * @param $repo Name of repo where to look
      * @param $param {Array} Parameters to match
-     * @param $user Currently logged user
      * @retun {Object} Data
      * 
      */
-    public function getBy($repo, $param, $user) {
-        $param['user'] = $user->getId();
-
-        $obj = $this->em
-                ->getRepository($repo)
-                ->findBy($param);
-
-        if (empty($obj)) {
-            throw new HttpException(204, "There is no items for requested data");
-        }
-
-        return $obj;
-    }
-
-    /**
-     * Get specific data from database by parameters without authentification
-     * 
-     * @param $repo Name of repo where to look
-     * @param $param {Array} Parameters to match
-     * @retun {Object} Data
-     * 
-     */
-    public function getByWithoutAuth($repo, $param, $empty = false) {
+    public function getBy($repo, $param, $empty = false) {
         $param['active'] = true;
+
+        $sort = isset($param['sort']) ? $param['sort'] : null;
+        $limit = isset($param['limit']) ? $param['limit'] : null;
+        $offset = isset($param['offset']) ? $param['offset'] : null;
+
+        unset($param['sort'], $param['limit'], $param['offset']);
+
         $obj = $this->em
                 ->getRepository($repo)
-                ->findBy($param);
+                ->findBy($param, $sort, $limit, $offset);
 
         if (empty($obj) && !$empty) {
             throw new HttpException(204, "There is no items for requested data");
@@ -126,32 +71,10 @@ class BaseManager {
      * @retun {Object} Data
      * 
      */
-    public function getOneBy($repo, $param, $user) {
-        $param['user'] = $user->getId();
-
+    public function getOneBy($repo, $param) {
         $obj = $this->em
                 ->getRepository($repo)
-                ->findOneBy($param);
-
-        if (empty($obj)) {
-            throw new HttpException(204, "There is no items for requested data");
-        }
-
-        return $obj;
-    }
-
-    /**
-     * Get first data from database by parameters without authentification
-     * 
-     * @param $repo Name of repo where to look
-     * @param $param {Array} Parameters to match
-     * @retun {Object} Data
-     * 
-     */
-    public function getOneByWithoutAuth($repo, $param) {
-        $obj = $this->em
-                ->getRepository($repo)
-                ->findOneBy($param);
+                ->findOneBy(is_array($param) ? $param : array('id' => $param));
 
         if (empty($obj)) {
             throw new HttpException(204, "There is no items for requested data");
@@ -170,26 +93,6 @@ class BaseManager {
      * 
      */
     public function get($repo, $id) {
-        $obj = $this->em
-                ->getRepository($repo)
-                ->find($id);
-
-        if (empty($obj)) {
-            throw new HttpException(204, "There is no items for requested data");
-        }
-
-        return $obj;
-    }
-
-    /**
-     * Get specific data from database without authentification
-     * 
-     * @param $repo Name of repo where to look
-     * @param $id Identifier
-     * @retun {Object} Data
-     * 
-     */
-    public function getWithoutAuth($repo, $id) {
         $obj = $this->em
                 ->getRepository($repo)
                 ->find($id);

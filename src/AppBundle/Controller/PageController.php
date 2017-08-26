@@ -16,7 +16,7 @@ class PageController extends FOSRestController {
         $query = (array) $request->query->all();
 
         $view = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Page', $query);
+                ->getBy('AppBundle:Page', $query);
 
         return $this->handleView($this->view($view));
     }
@@ -27,7 +27,7 @@ class PageController extends FOSRestController {
      */
     public function getPagesChildAction($slug) {
         $view = $this->getBaseManager()
-                ->getByWithoutAuth('AppBundle:Page', array('parent' => $slug));
+                ->getBy('AppBundle:Page', array('parent' => $slug));
 
         return $this->handleView($this->view($view));
     }
@@ -38,7 +38,7 @@ class PageController extends FOSRestController {
      */
     public function getPageAction($id) {
         $view = $this->getBaseManager()
-                ->getWithoutAuth('AppBundle:Page', $id);
+                ->get('AppBundle:Page', $id);
 
         return $this->handleView($this->view($view));
     }
@@ -52,13 +52,13 @@ class PageController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['parent']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Page', $data['parent']['id']) : false;
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Image', $data['image']['id']) : false;
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->set($page, 'AppBundle:Page', $data, $this->getLoggedUser(), $request->getClientIp());
@@ -74,13 +74,13 @@ class PageController extends FOSRestController {
         $data = $request->request->all();
 
         isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
-                        ->get('AppBundle:Page', $data['parent']['id'], $this->getLoggedUser()) : false;
+                        ->getOneBy('AppBundle:Page', $data['parent']['id']) : false;
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
-                        ->get('AppBundle:Image', $data['image']['id'], $this->getLoggedUser()) : $data['image'] = NULL;
+                        ->getOneBy('AppBundle:Image', $data['image']['id']) : $data['image'] = NULL;
 
         isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->get('AppBundle:Gallery', $data['gallery']['id'], $this->getLoggedUser()) : $data['gallery'] = NULL;
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : $data['gallery'] = NULL;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Page', $id, $this->getLoggedUser(), $request->getClientIp());
