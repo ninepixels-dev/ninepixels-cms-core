@@ -36,6 +36,7 @@ class AppInitializeCommand extends Command {
 
         $userManager = $this->getApplication()->getKernel()->getContainer()->get('fos_user.user_manager');
         $user = $userManager->createUser();
+        $user->setName('Admin Adminovic');
         $user->setUsername('admin');
         $user->setEmail('admin@admin.com');
         $user->setPlainPassword('admin');
