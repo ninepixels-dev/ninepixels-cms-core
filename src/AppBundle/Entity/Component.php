@@ -35,7 +35,7 @@ class Component {
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=65353)
+     * @ORM\Column(type="text")
      * @Expose
      */
     private $value;

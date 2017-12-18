@@ -49,7 +49,7 @@ class Item {
     private $identifier;
 
     /**
-     * @ORM\Column(type="string", length=65353, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
     private $structure;
@@ -81,7 +81,7 @@ class Item {
     private $video;
 
     /**
-     * @ORM\Column(type="string", length=65353, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
     private $snippet;

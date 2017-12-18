@@ -54,7 +54,7 @@ class Blog {
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=10960)
+     * @ORM\Column(type="text")
      * @Expose
      */
     private $content;

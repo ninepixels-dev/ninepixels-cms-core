@@ -17,7 +17,7 @@ class PageController extends FOSRestController {
 
         $view = $this->getBaseManager()
                 ->getBy('AppBundle:Page', $query);
-
+        
         return $this->handleView($this->view($view));
     }
 
