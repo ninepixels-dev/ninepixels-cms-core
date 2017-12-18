@@ -1,0 +1,17 @@
+parameters:
+    client_url: 'http://ninepixels.io'
+    client_confirmation: 'http://ninepixels.io/#/login'
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: ninepixels-seed
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: 587
+    secret: NinePixelSeedApplication
+    
+    image_gallery: [1280, 780]
+    image_thumbnail: [360, 220]

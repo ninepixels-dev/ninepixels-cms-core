@@ -52,6 +52,11 @@ class AppInitializeCommand extends Command {
         $homepage->setUser($user);
         $homepage->setName('homepage');
         $homepage->setTemplate('homepage.php');
+        $homepage->setShowHeader(true);
+        $homepage->setShowNavigation(true);
+        $homepage->setShowFooter(true);
+        $homepage->setShowInNavigation(true);
+        $homepage->setVisible(true);
         $homepage->setActive(true);
 
         $pageManager->persist($homepage);
