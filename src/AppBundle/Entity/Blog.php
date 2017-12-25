@@ -42,13 +42,13 @@ class Blog {
     private $template;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=256)
      * @Expose
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="string", length=256, nullable=true)
      * @Expose
      */
     private $title;
