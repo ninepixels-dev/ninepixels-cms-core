@@ -8,11 +8,11 @@ use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ninepixels_pages")
+ * @ORM\Table(name="ninepixels_travel")
  * 
  * @ExclusionPolicy("all")
  */
-class Page {
+class Travel {
 
     /**
      * @ORM\Column(type="integer")
@@ -30,22 +30,46 @@ class Page {
 
     /**
      * @ORM\ManyToOne(targetEntity="Page")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @ORM\JoinColumn(name="page", referencedColumnName="id")
      * @Expose
      */
-    private $parent;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     * @Expose
-     */
-    private $name;
+    private $page;
 
     /**
      * @ORM\Column(type="string", length=64)
      * @Expose
      */
     private $template;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Expose
+     */
+    private $name;
+    
+    /**
+     * @ORM\Column(type="string", length=256)
+     * @Expose
+     */
+    private $location;
+
+    /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Expose
+     */
+    private $basicInfo;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Expose
+     */
+    private $additionalInfo;
 
     /**
      * @ORM\ManyToOne(targetEntity="Image")
@@ -62,49 +86,19 @@ class Page {
     private $gallery;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : false})
+     * @ORM\Column(type="boolean", options={"default" : false}, nullable=true)
      * @Expose
      */
     private $pinned;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
-     * @Expose
-     */
-    private $showHeader;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
-     * @Expose
-     */
-    private $showNavigation;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
-     * @Expose
-     */
-    private $showFooter;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
-     * @Expose
-     */
-    private $showInNavigation;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
+     * @ORM\Column(type="boolean", options={"default" : true}, nullable=true)
      * @Expose
      */
     private $visible;
 
     /**
-     * @ORM\Column(type="integer", nullable=true, options={"default" : 1})
-     * @Expose
-     */
-    private $position;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default" : true})
+     * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
     private $active;
@@ -134,35 +128,11 @@ class Page {
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Page
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set template
      *
      * @param string $template
      *
-     * @return Page
+     * @return Travel
      */
     public function setTemplate($template)
     {
@@ -182,11 +152,131 @@ class Page {
     }
 
     /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Travel
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     *
+     * @return Travel
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Travel
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set basicInfo
+     *
+     * @param string $basicInfo
+     *
+     * @return Travel
+     */
+    public function setBasicInfo($basicInfo)
+    {
+        $this->basicInfo = $basicInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get basicInfo
+     *
+     * @return string
+     */
+    public function getBasicInfo()
+    {
+        return $this->basicInfo;
+    }
+
+    /**
+     * Set additionalInfo
+     *
+     * @param string $additionalInfo
+     *
+     * @return Travel
+     */
+    public function setAdditionalInfo($additionalInfo)
+    {
+        $this->additionalInfo = $additionalInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalInfo
+     *
+     * @return string
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->additionalInfo;
+    }
+
+    /**
      * Set pinned
      *
      * @param boolean $pinned
      *
-     * @return Page
+     * @return Travel
      */
     public function setPinned($pinned)
     {
@@ -206,107 +296,11 @@ class Page {
     }
 
     /**
-     * Set showHeader
-     *
-     * @param boolean $showHeader
-     *
-     * @return Page
-     */
-    public function setShowHeader($showHeader)
-    {
-        $this->showHeader = $showHeader;
-
-        return $this;
-    }
-
-    /**
-     * Get showHeader
-     *
-     * @return boolean
-     */
-    public function getShowHeader()
-    {
-        return $this->showHeader;
-    }
-
-    /**
-     * Set showNavigation
-     *
-     * @param boolean $showNavigation
-     *
-     * @return Page
-     */
-    public function setShowNavigation($showNavigation)
-    {
-        $this->showNavigation = $showNavigation;
-
-        return $this;
-    }
-
-    /**
-     * Get showNavigation
-     *
-     * @return boolean
-     */
-    public function getShowNavigation()
-    {
-        return $this->showNavigation;
-    }
-
-    /**
-     * Set showFooter
-     *
-     * @param boolean $showFooter
-     *
-     * @return Page
-     */
-    public function setShowFooter($showFooter)
-    {
-        $this->showFooter = $showFooter;
-
-        return $this;
-    }
-
-    /**
-     * Get showFooter
-     *
-     * @return boolean
-     */
-    public function getShowFooter()
-    {
-        return $this->showFooter;
-    }
-
-    /**
-     * Set showInNavigation
-     *
-     * @param boolean $showInNavigation
-     *
-     * @return Page
-     */
-    public function setShowInNavigation($showInNavigation)
-    {
-        $this->showInNavigation = $showInNavigation;
-
-        return $this;
-    }
-
-    /**
-     * Get showInNavigation
-     *
-     * @return boolean
-     */
-    public function getShowInNavigation()
-    {
-        return $this->showInNavigation;
-    }
-
-    /**
      * Set visible
      *
      * @param boolean $visible
      *
-     * @return Page
+     * @return Travel
      */
     public function setVisible($visible)
     {
@@ -326,35 +320,11 @@ class Page {
     }
 
     /**
-     * Set position
-     *
-     * @param integer $position
-     *
-     * @return Page
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
      * Set active
      *
      * @param boolean $active
      *
-     * @return Page
+     * @return Travel
      */
     public function setActive($active)
     {
@@ -378,7 +348,7 @@ class Page {
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Page
+     * @return Travel
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {
@@ -398,27 +368,27 @@ class Page {
     }
 
     /**
-     * Set parent
+     * Set page
      *
-     * @param \AppBundle\Entity\Page $parent
+     * @param \AppBundle\Entity\Page $page
      *
-     * @return Page
+     * @return Travel
      */
-    public function setParent(\AppBundle\Entity\Page $parent = null)
+    public function setPage(\AppBundle\Entity\Page $page = null)
     {
-        $this->parent = $parent;
+        $this->page = $page;
 
         return $this;
     }
 
     /**
-     * Get parent
+     * Get page
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getParent()
+    public function getPage()
     {
-        return $this->parent;
+        return $this->page;
     }
 
     /**
@@ -426,7 +396,7 @@ class Page {
      *
      * @param \AppBundle\Entity\Image $image
      *
-     * @return Page
+     * @return Travel
      */
     public function setImage(\AppBundle\Entity\Image $image = null)
     {
@@ -450,7 +420,7 @@ class Page {
      *
      * @param \AppBundle\Entity\Gallery $gallery
      *
-     * @return Page
+     * @return Travel
      */
     public function setGallery(\AppBundle\Entity\Gallery $gallery = null)
     {

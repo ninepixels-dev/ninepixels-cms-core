@@ -61,3 +61,7 @@ languages:
 locale:
     type: rest
     resource: AppBundle\Controller\LocaleController
+
+travel:
+    type: rest
+    resource: AppBundle\Controller\TravelController

@@ -3,10 +3,12 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
-$classLoader = require __DIR__.'/../vendor/autoload.php';
+$classLoader = require __DIR__ . '/../vendor/autoload.php';
 if (PHP_VERSION_ID < 70000) {
-    include_once __DIR__.'/../var/bootstrap.php.cache';
+    include_once __DIR__ . '/../var/bootstrap.php.cache';
 }
+
+apc_clear_cache();
 
 $loader = new ApcClassLoader('sf2', $classLoader);
 $loader->register(true);
@@ -17,7 +19,6 @@ if (PHP_VERSION_ID < 70000) {
 }
 
 //$kernel = new AppCache($kernel);
-
 // When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
 //Request::enableHttpMethodParameterOverride();
 $request = Request::createFromGlobals();

@@ -61,6 +61,12 @@ class Metadata {
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=1024, nullable=true)
+     * @Expose
+     */
+    private $additionalFields;
+
+    /**
      * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
@@ -153,6 +159,28 @@ class Metadata {
      */
     public function getDescription() {
         return $this->description;
+    }
+
+    /**
+     * Set additionalFields
+     *
+     * @param string $additionalFields
+     *
+     * @return Metadata
+     */
+    public function setAdditionalFields($additionalFields) {
+        $this->additionalFields = $additionalFields;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalFields
+     *
+     * @return string
+     */
+    public function getAdditionalFields() {
+        return $this->additionalFields;
     }
 
     /**
