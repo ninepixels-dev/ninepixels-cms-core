@@ -46,9 +46,9 @@ class Travel {
      * @Expose
      */
     private $name;
-    
+
     /**
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=256, nullable=true)
      * @Expose
      */
     private $location;
@@ -60,13 +60,13 @@ class Travel {
     private $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
     private $basicInfo;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
     private $additionalInfo;
@@ -122,8 +122,7 @@ class Travel {
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -134,8 +133,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setTemplate($template)
-    {
+    public function setTemplate($template) {
         $this->template = $template;
 
         return $this;
@@ -146,8 +144,7 @@ class Travel {
      *
      * @return string
      */
-    public function getTemplate()
-    {
+    public function getTemplate() {
         return $this->template;
     }
 
@@ -158,8 +155,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -170,8 +166,7 @@ class Travel {
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -182,8 +177,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setLocation($location)
-    {
+    public function setLocation($location) {
         $this->location = $location;
 
         return $this;
@@ -194,8 +188,7 @@ class Travel {
      *
      * @return string
      */
-    public function getLocation()
-    {
+    public function getLocation() {
         return $this->location;
     }
 
@@ -206,8 +199,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -218,8 +210,7 @@ class Travel {
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -230,8 +221,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setBasicInfo($basicInfo)
-    {
+    public function setBasicInfo($basicInfo) {
         $this->basicInfo = $basicInfo;
 
         return $this;
@@ -242,8 +232,7 @@ class Travel {
      *
      * @return string
      */
-    public function getBasicInfo()
-    {
+    public function getBasicInfo() {
         return $this->basicInfo;
     }
 
@@ -254,8 +243,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setAdditionalInfo($additionalInfo)
-    {
+    public function setAdditionalInfo($additionalInfo) {
         $this->additionalInfo = $additionalInfo;
 
         return $this;
@@ -266,8 +254,7 @@ class Travel {
      *
      * @return string
      */
-    public function getAdditionalInfo()
-    {
+    public function getAdditionalInfo() {
         return $this->additionalInfo;
     }
 
@@ -278,8 +265,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setPinned($pinned)
-    {
+    public function setPinned($pinned) {
         $this->pinned = $pinned;
 
         return $this;
@@ -290,8 +276,7 @@ class Travel {
      *
      * @return boolean
      */
-    public function getPinned()
-    {
+    public function getPinned() {
         return $this->pinned;
     }
 
@@ -302,8 +287,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
 
         return $this;
@@ -314,8 +298,7 @@ class Travel {
      *
      * @return boolean
      */
-    public function getVisible()
-    {
+    public function getVisible() {
         return $this->visible;
     }
 
@@ -326,8 +309,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
 
         return $this;
@@ -338,8 +320,7 @@ class Travel {
      *
      * @return boolean
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -350,8 +331,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
+    public function setUser(\AppBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -362,8 +342,7 @@ class Travel {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -374,8 +353,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setPage(\AppBundle\Entity\Page $page = null)
-    {
+    public function setPage(\AppBundle\Entity\Page $page = null) {
         $this->page = $page;
 
         return $this;
@@ -386,8 +364,7 @@ class Travel {
      *
      * @return \AppBundle\Entity\Page
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
 
@@ -398,8 +375,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
-    {
+    public function setImage(\AppBundle\Entity\Image $image = null) {
         $this->image = $image;
 
         return $this;
@@ -410,8 +386,7 @@ class Travel {
      *
      * @return \AppBundle\Entity\Image
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -422,8 +397,7 @@ class Travel {
      *
      * @return Travel
      */
-    public function setGallery(\AppBundle\Entity\Gallery $gallery = null)
-    {
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
         $this->gallery = $gallery;
 
         return $this;
@@ -434,8 +408,8 @@ class Travel {
      *
      * @return \AppBundle\Entity\Gallery
      */
-    public function getGallery()
-    {
+    public function getGallery() {
         return $this->gallery;
     }
+
 }

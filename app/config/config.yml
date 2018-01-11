@@ -122,9 +122,9 @@ liip_imagine:
             quality: 80
             filters:
                 strip: ~
-                thumbnail: { size: %image_thumbnail%, mode: inset }
+                thumbnail: { size: %image_thumbnail%, mode: outbound, position: center }
         gallery:
             quality: 80
             filters:
                 strip: ~
-                thumbnail: { size: %image_gallery%, mode: inset }
+                thumbnail: { size: %image_gallery%, mode: outbound, position: center }

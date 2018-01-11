@@ -73,7 +73,7 @@ class TravelController extends FOSRestController {
      * Path: /travels/{id}
      * Method: PUT
      */
-    public function putBlogAction($id, Request $request) {
+    public function putTravelAction($id, Request $request) {
         $data = $request->request->all();
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
@@ -95,7 +95,7 @@ class TravelController extends FOSRestController {
      * Path: /travels/{id}
      * Method: DELETE
      */
-    public function deleteBlogAction($id, Request $request) {
+    public function deleteTravelAction($id, Request $request) {
         $view = $this->getBaseManager()
                 ->delete('AppBundle:Travel', $id, $this->getLoggedUser(), $request->getClientIp());
 
