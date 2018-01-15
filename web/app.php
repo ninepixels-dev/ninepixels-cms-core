@@ -8,8 +8,6 @@ if (PHP_VERSION_ID < 70000) {
     include_once __DIR__ . '/../var/bootstrap.php.cache';
 }
 
-apc_clear_cache();
-
 $loader = new ApcClassLoader('sf2', $classLoader);
 $loader->register(true);
 

@@ -65,3 +65,7 @@ locale:
 travel:
     type: rest
     resource: AppBundle\Controller\TravelController
+
+product:
+    type: rest
+    resource: AppBundle\Controller\ProductController
