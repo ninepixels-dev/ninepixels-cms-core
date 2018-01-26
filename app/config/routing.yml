@@ -69,3 +69,7 @@ travel:
 product:
     type: rest
     resource: AppBundle\Controller\ProductController
+
+event:
+    type: rest
+    resource: AppBundle\Controller\EventController

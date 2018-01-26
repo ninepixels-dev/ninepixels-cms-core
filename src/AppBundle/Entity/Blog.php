@@ -36,6 +36,13 @@ class Blog {
     private $page;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language", referencedColumnName="id", nullable=true)
+     * @Expose
+     */
+    private $language;
+
+    /**
      * @ORM\Column(type="string", length=64)
      * @Expose
      */

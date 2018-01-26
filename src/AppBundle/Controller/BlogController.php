@@ -44,6 +44,28 @@ class BlogController extends FOSRestController {
     }
 
     /**
+     * Path: /languages/{slug}/blogs
+     * Method: GET
+     */
+    public function getLanguagesBlogsAction($slug) {
+        $view = $this->getBaseManager()
+                ->getBy('AppBundle:Blog', array('language' => $slug), false, array('created' => 'DESC'));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
+     * Path: /languages/{lang}/pages/{slug}/blogs
+     * Method: GET
+     */
+    public function getLanguagesPagesBlogsAction($lang, $slug) {
+        $view = $this->getBaseManager()
+                ->getBy('AppBundle:Blog', array('page' => $slug, 'language' => $lang), false, array('created' => 'DESC'));
+
+        return $this->handleView($this->view($view));
+    }
+
+    /**
      * Path: /blogs
      * Method: POST
      * 

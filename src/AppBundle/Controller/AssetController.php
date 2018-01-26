@@ -17,6 +17,7 @@ class AssetController extends FOSRestController {
             'blogs' => $this->getBaseManager()->getAll('AppBundle:Blog', true) ?: array(),
             'travels' => $this->getBaseManager()->getAll('AppBundle:Travel', true) ?: array(),
             'products' => $this->getBaseManager()->getAll('AppBundle:Product', true) ?: array(),
+            'events' => $this->getBaseManager()->getAll('AppBundle:Event', true) ?: array(),
             'languages' => $this->getBaseManager()->getAll('AppBundle:Language', true) ?: array(),
             'locales' => $this->getBaseManager()->getAll('AppBundle:Locale', true) ?: array(),
             'options' => $this->getBaseManager()->getAll('AppBundle:Option', true) ?: array(),
