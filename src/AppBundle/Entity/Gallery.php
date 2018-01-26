@@ -29,6 +29,12 @@ class Gallery {
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Gallery")
+     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
+     */
+    private $gallery;
+
+    /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * @Expose
      */
@@ -127,6 +133,28 @@ class Gallery {
      */
     public function getUser() {
         return $this->user;
+    }
+
+    /**
+     * Set gallery
+     *
+     * @param \AppBundle\Entity\Gallery $gallery
+     *
+     * @return Gallery
+     */
+    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * Get gallery
+     *
+     * @return \AppBundle\Entity\Gallery
+     */
+    public function getGallery() {
+        return $this->gallery;
     }
 
 }
