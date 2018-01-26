@@ -57,6 +57,9 @@ class TravelController extends FOSRestController {
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
 
+        isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Travel', $data['parent']['id']) : false;
+
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Image', $data['image']['id']) : false;
 
@@ -78,6 +81,9 @@ class TravelController extends FOSRestController {
 
         isset($data['page']) ? $data['page'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Page', $data['page']['id']) : false;
+
+        isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Travel', $data['parent']['id']) : false;
 
         isset($data['image']) ? $data['image'] = $this->getBaseManager()
                         ->getOneBy('AppBundle:Image', $data['image']['id']) : $data['image'] = NULL;

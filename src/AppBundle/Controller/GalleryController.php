@@ -59,6 +59,9 @@ class GalleryController extends FOSRestController {
         $item = new Gallery();
         $data = $request->request->all();
 
+        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
+
         $view = $this->getBaseManager()
                 ->set($item, 'AppBundle:Gallery', $data, $this->getLoggedUser(), $request->getClientIp());
 
@@ -71,6 +74,9 @@ class GalleryController extends FOSRestController {
      */
     public function putGalleryAction($id, Request $request) {
         $data = $request->request->all();
+
+        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Gallery', $id, $this->getLoggedUser(), $request->getClientIp());

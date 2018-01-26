@@ -36,6 +36,13 @@ class Travel {
     private $page;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Travel")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @Expose
+     */
+    private $parent;
+
+    /**
      * @ORM\Column(type="string", length=64)
      * @Expose
      */
@@ -51,13 +58,13 @@ class Travel {
      * @ORM\Column(type="string", length=256, nullable=true)
      * @Expose
      */
-    private $location;
+    private $title;
 
     /**
-     * @ORM\Column(type="string", length=256, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Expose
      */
-    private $title;
+    private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -70,6 +77,18 @@ class Travel {
      * @Expose
      */
     private $additionalInfo;
+
+    /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
+     */
+    private $location;
+
+    /**
+     * @ORM\Column(type="string", length=256, nullable=true)
+     * @Expose
+     */
+    private $cordinates;
 
     /**
      * @ORM\ManyToOne(targetEntity="Image")
@@ -171,28 +190,6 @@ class Travel {
     }
 
     /**
-     * Set location
-     *
-     * @param string $location
-     *
-     * @return Travel
-     */
-    public function setLocation($location) {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation() {
-        return $this->location;
-    }
-
-    /**
      * Set title
      *
      * @param string $title
@@ -212,6 +209,28 @@ class Travel {
      */
     public function getTitle() {
         return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Travel
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
     }
 
     /**
@@ -256,6 +275,50 @@ class Travel {
      */
     public function getAdditionalInfo() {
         return $this->additionalInfo;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     *
+     * @return Travel
+     */
+    public function setLocation($location) {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getLocation() {
+        return $this->location;
+    }
+
+    /**
+     * Set cordinates
+     *
+     * @param string $cordinates
+     *
+     * @return Travel
+     */
+    public function setCordinates($cordinates) {
+        $this->cordinates = $cordinates;
+
+        return $this;
+    }
+
+    /**
+     * Get cordinates
+     *
+     * @return string
+     */
+    public function getCordinates() {
+        return $this->cordinates;
     }
 
     /**
@@ -366,6 +429,28 @@ class Travel {
      */
     public function getPage() {
         return $this->page;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\Travel $parent
+     *
+     * @return Travel
+     */
+    public function setParent(\AppBundle\Entity\Travel $parent = null) {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\Travel
+     */
+    public function getParent() {
+        return $this->parent;
     }
 
     /**
