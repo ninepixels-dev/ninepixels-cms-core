@@ -43,6 +43,7 @@ class GalleryController extends FOSRestController {
             array_push($view, array(
                 'id' => $gallery->getId(),
                 'name' => $gallery->getName(),
+                'parent' => $gallery->getParent(),
                 'images' => (array) $this->getBaseManager()
                         ->getBy('AppBundle:Image', array('gallery' => $gallery), true)
             ));
@@ -59,8 +60,8 @@ class GalleryController extends FOSRestController {
         $item = new Gallery();
         $data = $request->request->all();
 
-        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
+        isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Gallery', $data['parent']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->set($item, 'AppBundle:Gallery', $data, $this->getLoggedUser(), $request->getClientIp());
@@ -75,8 +76,8 @@ class GalleryController extends FOSRestController {
     public function putGalleryAction($id, Request $request) {
         $data = $request->request->all();
 
-        isset($data['gallery']) ? $data['gallery'] = $this->getBaseManager()
-                        ->getOneBy('AppBundle:Gallery', $data['gallery']['id']) : false;
+        isset($data['parent']) ? $data['parent'] = $this->getBaseManager()
+                        ->getOneBy('AppBundle:Gallery', $data['parent']['id']) : false;
 
         $view = $this->getBaseManager()
                 ->update($data, 'AppBundle:Gallery', $id, $this->getLoggedUser(), $request->getClientIp());

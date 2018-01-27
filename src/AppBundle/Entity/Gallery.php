@@ -30,9 +30,10 @@ class Gallery {
 
     /**
      * @ORM\ManyToOne(targetEntity="Gallery")
-     * @ORM\JoinColumn(name="gallery", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @Expose
      */
-    private $gallery;
+    private $parent;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
@@ -60,12 +61,14 @@ class Gallery {
         }
     }
 
+
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -76,7 +79,8 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -87,7 +91,8 @@ class Gallery {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -98,7 +103,8 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
 
         return $this;
@@ -109,7 +115,8 @@ class Gallery {
      *
      * @return boolean
      */
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
     }
 
@@ -120,7 +127,8 @@ class Gallery {
      *
      * @return Gallery
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
         $this->user = $user;
 
         return $this;
@@ -131,30 +139,32 @@ class Gallery {
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
     /**
-     * Set gallery
+     * Set parent
      *
-     * @param \AppBundle\Entity\Gallery $gallery
+     * @param \AppBundle\Entity\Gallery $parent
      *
      * @return Gallery
      */
-    public function setGallery(\AppBundle\Entity\Gallery $gallery = null) {
-        $this->gallery = $gallery;
+    public function setParent(\AppBundle\Entity\Gallery $parent = null)
+    {
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get gallery
+     * Get parent
      *
      * @return \AppBundle\Entity\Gallery
      */
-    public function getGallery() {
-        return $this->gallery;
+    public function getParent()
+    {
+        return $this->parent;
     }
-
 }
