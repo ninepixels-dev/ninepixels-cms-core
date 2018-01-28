@@ -44,6 +44,12 @@ class Language {
      * @ORM\Column(type="boolean", options={"default" : true})
      * @Expose
      */
+    private $visible;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : true})
+     * @Expose
+     */
     private $active;
 
     /**
@@ -117,6 +123,30 @@ class Language {
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     *
+     * @return Language
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
     /**
