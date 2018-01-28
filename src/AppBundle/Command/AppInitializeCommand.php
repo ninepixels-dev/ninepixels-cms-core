@@ -16,7 +16,6 @@ class AppInitializeCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $output->writeln('Updating database...');
         $command = $this->getApplication()->find('doctrine:schema:update');
 
         $greetInput = new ArrayInput(array('--force' => true));
@@ -45,6 +44,7 @@ class AppInitializeCommand extends Command {
         $userManager->updateUser($user);
 
         $output->writeln('User succesfully created!');
+        $output->writeln('Username: admin / Password: admin');
         $output->writeln('Creating homepage...');
 
         $pageManager = $this->getApplication()->getKernel()->getContainer()->get('doctrine')->getManager();

@@ -1,6 +1,4 @@
 parameters:
-    client_url: 'http://ninepixels.io'
-    client_confirmation: 'http://ninepixels.io/#/login'
     database_host: 127.0.0.1
     database_port: null
     database_name: ninepixels-seed
